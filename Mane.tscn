@@ -1,10 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://8ofimlpj6xgb"]
+[gd_scene load_steps=7 format=3 uid="uid://8ofimlpj6xgb"]
 
-[ext_resource type="Script" path="res://character_body_3d.gd" id="1_aqo2n"]
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1is6h"]
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_l1k88"]
+[ext_resource type="PackedScene" uid="uid://xqgm4im8qfv1" path="res://Actors/Test_character.tscn" id="1_xp2jq"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x7ln8"]
 
@@ -21,17 +17,7 @@ sky = SubResource("Sky_1p5qc")
 
 [node name="Node3D" type="Node3D"]
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="."]
-script = ExtResource("1_aqo2n")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-shape = SubResource("CapsuleShape3D_1is6h")
-
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 0.848067, 0.52989, 0, -0.52989, 0.848067, 0, 2.08545, 3.3104)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D"]
-mesh = SubResource("CapsuleMesh_l1k88")
+[node name="CharacterBody3D" parent="." instance=ExtResource("1_xp2jq")]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_cab8o")
