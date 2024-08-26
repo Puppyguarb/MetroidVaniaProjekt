@@ -22,9 +22,6 @@ func dodge():
 	dodge_speed = 3
 	await get_tree().create_timer(0.5).timeout
 	dodge_speed = 1
-func _input(event: InputEvent) -> void:
-	if Input.is_action_pressed("Dodge"):
-		dodge()
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -67,6 +64,9 @@ func _input(event: InputEvent) -> void:
 		$ParryWindow.visible = true
 		print("yoursister")
 		parry_window.start()
+	
+	if Input.is_action_pressed("Dodge"):
+		dodge()
 
 func _on_parry_window_timer_timeout() -> void:
 	is_parrying = false
