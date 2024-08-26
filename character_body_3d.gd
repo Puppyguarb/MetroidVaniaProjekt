@@ -1,10 +1,27 @@
 extends CharacterBody3D
 
+var is_immune = false
+var immune_time = 0.0
+var dodge_cooldown = 0.0
+var default_dodge_cooldown = 2.0
 
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
+var dodge_speed = 1
+
 
 @onready var camera = $Node3D/Camera3D
+
+func dodge():
+	if dodge_cooldown > 0: 
+		return
+	dodge_cooldown = default_dodge_cooldown
+	dodge_speed = 3
+	await get_tree().create_timer(0.5).timeout
+	dodge_speed = 1
+func _input(event: InputEvent) -> void:
+	if Input.is_action_pressed("Dodge"):
+		dodge()
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -17,15 +34,15 @@ func _physics_process(delta: float) -> void:
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+	var input_dir := Input.get_vector("Left", "Right", "Forward", "Backward")
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+		velocity.x = direction.x * SPEED * dodge_speed
+		velocity.z = direction.z * SPEED * dodge_speed
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
+	dodge_cooldown -= delta
 	move_and_slide()
 
 
