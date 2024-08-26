@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cxka03nbevc3u"]
+
+[ext_resource type="Script" path="res://spittah_bullet.gd" id="1_4xapq"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_8yg0u"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_kpsg7"]
+
+[node name="RigidBody3D" type="RigidBody3D"]
+collision_layer = 2
+gravity_scale = 0.0
+script = ExtResource("1_4xapq")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_8yg0u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_kpsg7")

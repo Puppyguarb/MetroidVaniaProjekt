@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://xqgm4im8qfv1"]
+[gd_scene load_steps=7 format=3 uid="uid://xqgm4im8qfv1"]
 
 [ext_resource type="Script" path="res://character_body_3d.gd" id="1_j40xc"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="2_kj52q"]
@@ -9,6 +9,10 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_a2gh5"]
 size = Vector3(0.1, 0.1, 0.1)
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_66fwo"]
+height = 1.89548
+radius = 0.707225
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 script = ExtResource("1_j40xc")
@@ -31,3 +35,12 @@ mesh = SubResource("CapsuleMesh_l1k88")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1.2106)
 mesh = SubResource("BoxMesh_a2gh5")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_66fwo")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

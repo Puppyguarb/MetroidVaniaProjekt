@@ -26,3 +26,13 @@ func _physics_process(delta: float) -> void:
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 
 	move_and_slide()
+
+
+func _on_area_3d_body_entered(body: Node3D) -> void:
+	if body is not Bullet:
+		return
+	await get_tree().create_timer(1).timeout
+	if not body:
+		return
+	if not body.is_queued_for_deletion():
+		body.queue_free()
