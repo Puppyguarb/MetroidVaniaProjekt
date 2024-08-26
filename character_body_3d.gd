@@ -13,7 +13,7 @@ var default_dodge_cooldown = 2.0
 var dodge_speed = 1
 
 
-@onready var camera = $Node3D/Camera3D
+@onready var camera = %Camera3D
 
 func dodge():
 	if dodge_cooldown > 0:
@@ -22,6 +22,9 @@ func dodge():
 	dodge_speed = 3
 	await get_tree().create_timer(0.5).timeout
 	dodge_speed = 1
+
+func _process(delta):
+	$DebugBox.global_position = calculate_target_pos(-1)
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -76,3 +79,13 @@ func _on_parry_window_timer_timeout() -> void:
 
 func _on_parry_cd_timer_timeout() -> void:
 	$ParryCoolDown.visible = false
+
+func calculate_target_pos(pos_y):
+	var mouse_2d_pos = get_viewport().get_mouse_position()
+	var mouse_world_pos = camera.project_position(mouse_2d_pos,1) #project_ray_origin
+
+	var dir = (mouse_world_pos - camera.global_position).normalized()
+
+	var target_y = pos_y - camera.global_position.y
+
+	return camera.global_position+dir*(target_y/dir.y)

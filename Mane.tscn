@@ -35,5 +35,5 @@ mesh = SubResource("BoxMesh_v6ecm")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
 shape = SubResource("BoxShape3D_f0a8o")
 
-[node name="MeshInstance3D2" parent="." instance=ExtResource("2_dm7y5")]
+[node name="Spitter" parent="." instance=ExtResource("2_dm7y5")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.641172, -0.44468, -6.32213)
