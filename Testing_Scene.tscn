@@ -1,0 +1,74 @@
+[gd_scene load_steps=12 format=3 uid="uid://ddctdc3tvemob"]
+
+[ext_resource type="Script" path="res://testing_scene.gd" id="1_3o53x"]
+[ext_resource type="Material" uid="uid://flq8j3d0aw7h" path="res://Materials/Red.tres" id="1_ltalh"]
+[ext_resource type="Material" uid="uid://bcyw470ychbr6" path="res://Materials/Blue.tres" id="2_ipg34"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ca1lg"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_86lfe"]
+
+[sub_resource type="Sky" id="Sky_pbw3l"]
+sky_material = SubResource("ProceduralSkyMaterial_86lfe")
+
+[sub_resource type="Environment" id="Environment_ggvl3"]
+background_mode = 2
+sky = SubResource("Sky_pbw3l")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vwpv7"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_nfeb1"]
+size = Vector3(10, 1, 10)
+
+[sub_resource type="SphereMesh" id="SphereMesh_7arop"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_hcgpn"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_3o53x")
+
+[node name="BlueCube" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, -2.98023e-08, 0, -2.98023e-08, 1, 0, 8.9407e-08, 0, 1, 0.761313, -2.38419e-07, 4.76837e-07)
+material_override = ExtResource("2_ipg34")
+mesh = SubResource("BoxMesh_ca1lg")
+
+[node name="RedCube" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, -2.98023e-08, 0, -2.98023e-08, 1, 0, 5.96046e-08, 0, 1, -0.846249, -2.38419e-07, 1.19209e-07)
+material_override = ExtResource("1_ltalh")
+mesh = SubResource("BoxMesh_ca1lg")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.0714, 4.89513)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_ggvl3")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.55844, 0.577322, -0.595688, 0, 0.71809, 0.69595, 0.829545, -0.388647, 0.40101, -3.6559, 1.31048, -0.0263679)
+
+[node name="SpawnBox" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+autostart = true
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.356, 0.857, -6)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_vwpv7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Area3D"]
+mesh = SubResource("BoxMesh_nfeb1")
+
+[node name="RigidBody3D" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.24811, -4.79935)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigidBody3D"]
+mesh = SubResource("SphereMesh_7arop")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RigidBody3D"]
+shape = SubResource("SphereShape3D_hcgpn")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
