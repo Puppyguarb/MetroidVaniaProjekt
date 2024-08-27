@@ -58,7 +58,7 @@ one_shot = true
 
 [node name="ParryCdTimer" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 0.75
+wait_time = 0.25
 one_shot = true
 
 [node name="ParryWindow" type="MeshInstance3D" parent="."]
@@ -78,6 +78,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.79118, 0, 4.47263)
 material_override = ExtResource("4_8y12a")
 mesh = SubResource("BoxMesh_w5j2j")
 
+[node name="MShartRegenTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="ParryWindowTimer" to="." method="_on_parry_window_timer_timeout"]
 [connection signal="timeout" from="ParryCdTimer" to="." method="_on_parry_cd_timer_timeout"]
+[connection signal="timeout" from="MShartRegenTimer" to="." method="_on_m_shart_regen_timer_timeout"]

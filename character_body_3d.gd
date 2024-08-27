@@ -11,6 +11,8 @@ var dodge_cooldown = 0.0
 var default_dodge_cooldown = 2.0
 var dodging = false
 var dodge_speed = 1
+var mirror_shards_current = 1
+var mirror_shards_max = 1
 
 
 @onready var camera = %Camera3D
@@ -29,6 +31,14 @@ func _process(delta):
 	$DebugBox.global_position = calculate_target_pos(global_position.y - 1)
 	var dir = ($DebugBox.global_position - global_position).normalized()
 	$MeshInstance3D.rotation.y = atan2(dir.x,dir.z) + PI
+	
+	#mirror shards stuff
+	if mirror_shards_current > mirror_shards_max:
+		print("too many shards faggot")
+		mirror_shards_current = mirror_shards_max
+	#if mirror_shards_current == 0:
+		#$MShartRegenTimer.start
+
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
@@ -52,7 +62,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func _on_area_3d_body_entered(body: Node3D) -> void:
+func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit/parry detection 
 	if body is not Bullet:
 		return
 	await get_tree().create_timer(0.2).timeout
@@ -63,29 +73,34 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 			body.activate_tracking()
 		else:
 			body.queue_free()
+		if dodging:
+			print("you dodged")
+			mirror_shards_current = mirror_shards_current + 1
 		if not dodging and not is_parrying:
 			print("you took damage")
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("Parry") and parry_cd.is_stopped() and parry_window.is_stopped() and !dodging:
+func _input(event: InputEvent) -> void: #detects parry input
+	if event.is_action_pressed("Parry") and parry_cd.is_stopped() and parry_window.is_stopped() and !dodging and mirror_shards_current > 0:
 		is_parrying = true
+		mirror_shards_current = mirror_shards_current - 1
+		print("ur shards are currently ",mirror_shards_current)
 		$ParryWindow.visible = true
 		print("you started parrying")
 		parry_window.start()
 
-	if Input.is_action_pressed("Dodge") and !is_parrying:
+	if Input.is_action_pressed("Dodge") and !is_parrying: #detects dodge input
 		dodge()
 
-func _on_parry_window_timer_timeout() -> void:
+func _on_parry_window_timer_timeout() -> void: #triggers when parry window closes, starts cooldown
 	is_parrying = false
 	$ParryWindow.visible = false
 	$ParryCoolDown.visible = true
 	parry_cd.start()
 
-func _on_parry_cd_timer_timeout() -> void:
+func _on_parry_cd_timer_timeout() -> void: #parry cooldown
 	$ParryCoolDown.visible = false
 
-func calculate_target_pos(pos_y):
+func calculate_target_pos(pos_y): #idk i didnt write this
 	var mouse_2d_pos = get_viewport().get_mouse_position()
 	var mouse_world_pos = camera.project_position(mouse_2d_pos,1) #project_ray_origin
 
@@ -94,3 +109,7 @@ func calculate_target_pos(pos_y):
 	var target_y = pos_y - camera.global_position.y
 
 	return camera.global_position+dir*(target_y/dir.y)
+
+#func _on_m_shart_regen_timer_timeout() -> void:
+	#print("gay")
+	#mirror_shards_current = mirror_shards_current + 1
