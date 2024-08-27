@@ -24,7 +24,11 @@ func dodge():
 	dodge_speed = 1
 
 func _process(delta):
-	$DebugBox.global_position = calculate_target_pos(-1)
+	#Pup stuff, feel free to edit
+	$DebugBox.global_position = calculate_target_pos(global_position.y - 1)
+	var dir = ($DebugBox.global_position - global_position).normalized()
+	$MeshInstance3D.rotation.y = atan2(dir.x,dir.z) + PI
+	
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
