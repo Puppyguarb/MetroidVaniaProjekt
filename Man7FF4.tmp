@@ -40,6 +40,3 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.641
 
 [node name="Spitter2" parent="." instance=ExtResource("2_dm7y5")]
 transform = Transform3D(0.801243, 0.598339, -2.61542e-08, 0, -4.37114e-08, -1, -0.598339, 0.801243, -3.50235e-08, -6.72192, -0.204136, -6.72857)
-
-[node name="Spitter3" parent="." instance=ExtResource("2_dm7y5")]
-transform = Transform3D(-0.591282, 0.806465, -3.52517e-08, 0, -4.37114e-08, -1, -0.806465, -0.591282, 2.58457e-08, -8.22522, -0.497024, 8.10562)

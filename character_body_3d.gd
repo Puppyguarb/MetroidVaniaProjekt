@@ -9,7 +9,7 @@ var is_immune = false
 var immune_time = 0.0
 var dodge_cooldown = 0.0
 var default_dodge_cooldown = 2.0
-
+var dodging = false
 var dodge_speed = 1
 
 
@@ -20,8 +20,10 @@ func dodge():
 		return
 	dodge_cooldown = default_dodge_cooldown
 	dodge_speed = 3
+	dodging = true
 	await get_tree().create_timer(0.5).timeout
 	dodge_speed = 1
+	dodging = false
 
 func _process(delta):
 	$DebugBox.global_position = calculate_target_pos(-1)
@@ -60,15 +62,17 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 			body.activate_tracking()
 		else:
 			body.queue_free()
+		if not dodging and not is_parrying:
+			print("you took damage")
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("Parry") and parry_cd.is_stopped() and parry_window.is_stopped():
+	if event.is_action_pressed("Parry") and parry_cd.is_stopped() and parry_window.is_stopped() and !dodging:
 		is_parrying = true
 		$ParryWindow.visible = true
-		print("yoursister")
+		print("you started parrying")
 		parry_window.start()
-	
-	if Input.is_action_pressed("Dodge"):
+
+	if Input.is_action_pressed("Dodge") and !is_parrying:
 		dodge()
 
 func _on_parry_window_timer_timeout() -> void:
