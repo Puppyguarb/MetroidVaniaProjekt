@@ -26,8 +26,9 @@ func dodge():
 	dodging = false
 
 func _process(delta):
-	$DebugBox.global_position = calculate_target_pos(-1)
-
+	$DebugBox.global_position = calculate_target_pos(global_position.y - 1)
+	var dir = ($DebugBox.global_position - global_position).normalized()
+	$MeshInstance3D.rotation.y = atan2(dir.x,dir.z) + PI
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
