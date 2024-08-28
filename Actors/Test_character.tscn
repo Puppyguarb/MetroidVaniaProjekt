@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://xqgm4im8qfv1"]
+[gd_scene load_steps=13 format=3 uid="uid://xqgm4im8qfv1"]
 
 [ext_resource type="Script" path="res://character_body_3d.gd" id="1_j40xc"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="2_kj52q"]
 [ext_resource type="Material" uid="uid://cg81h1albtdku" path="res://Materials/Green.tres" id="3_yf06v"]
 [ext_resource type="Material" uid="uid://flq8j3d0aw7h" path="res://Materials/Red.tres" id="4_8y12a"]
+[ext_resource type="Script" path="res://Actors/label.gd" id="5_ybwnr"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1is6h"]
 
@@ -81,6 +82,35 @@ mesh = SubResource("BoxMesh_w5j2j")
 [node name="MShartRegenTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+script = ExtResource("5_ybwnr")
+
+[connection signal="mirror_shard_change" from="." to="CanvasLayer/Control/MarginContainer/Label" method="_on_character_body_3d_mirror_shard_change"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="ParryWindowTimer" to="." method="_on_parry_window_timer_timeout"]
 [connection signal="timeout" from="ParryCdTimer" to="." method="_on_parry_cd_timer_timeout"]

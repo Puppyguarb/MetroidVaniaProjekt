@@ -13,7 +13,7 @@ var dodging = false
 var dodge_speed = 1
 var mirror_shards_current = 1
 var mirror_shards_max = 1
-
+signal mirror_shard_change
 
 @onready var camera = %Camera3D
 
@@ -36,6 +36,7 @@ func _process(delta):
 	if mirror_shards_current > mirror_shards_max:
 		print("too many shards faggot")
 		mirror_shards_current = mirror_shards_max
+		mirror_shard_change.emit()
 	#if mirror_shards_current == 0:
 		#$MShartRegenTimer.start
 
@@ -76,6 +77,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit/parry detectio
 		if dodging:
 			print("you dodged")
 			mirror_shards_current = mirror_shards_current + 1
+			mirror_shard_change.emit()
 		if not dodging and not is_parrying:
 			print("you took damage")
 
@@ -83,6 +85,7 @@ func _input(event: InputEvent) -> void: #detects parry input
 	if event.is_action_pressed("Parry") and parry_cd.is_stopped() and parry_window.is_stopped() and !dodging and mirror_shards_current > 0:
 		is_parrying = true
 		mirror_shards_current = mirror_shards_current - 1
+		mirror_shard_change.emit()
 		print("ur shards are currently ",mirror_shards_current)
 		$ParryWindow.visible = true
 		print("you started parrying")
