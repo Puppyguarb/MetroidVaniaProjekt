@@ -38,10 +38,11 @@ fov = 70.0
 size = 8.47608
 script = ExtResource("2_kj52q")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="PlayerMesh" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
 mesh = SubResource("CapsuleMesh_l1k88")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="MeshInstance3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerMesh"]
 transform = Transform3D(0.25, 0, 0, 0, -1.09278e-08, 0.25, 0, -0.25, -1.09278e-08, 0, 0, -1.2106)
 mesh = SubResource("PrismMesh_b111u")
 

@@ -1,3 +1,5 @@
+class_name Player
+
 extends CharacterBody3D
 
 var is_parrying = false
@@ -27,18 +29,18 @@ func dodge():
 	dodge_speed = 1
 	dodging = false
 
-func _process(delta):
+func _process(_delta):
 	$DebugBox.global_position = calculate_target_pos(global_position.y - 1)
 	var dir = ($DebugBox.global_position - global_position).normalized()
-	$MeshInstance3D.rotation.y = atan2(dir.x,dir.z) + PI
+	%PlayerMesh.rotation.y = atan2(dir.x,dir.z) + PI
 	
 	#mirror shards stuff
 	if mirror_shards_current > mirror_shards_max:
 		print("too many shards faggot")
 		mirror_shards_current = mirror_shards_max
 		mirror_shard_change.emit()
-	#if mirror_shards_current == 0:
-		#$MShartRegenTimer.start
+	if mirror_shards_current < mirror_shards_max and $MShartRegenTimer.is_stopped:
+		$MShartRegenTimer.start()
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -76,16 +78,14 @@ func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit/parry detectio
 			body.queue_free()
 		if dodging:
 			print("you dodged")
-			mirror_shards_current = mirror_shards_current + 1
-			mirror_shard_change.emit()
+			change_mirror_shard(1)
 		if not dodging and not is_parrying:
 			print("you took damage")
 
 func _input(event: InputEvent) -> void: #detects parry input
 	if event.is_action_pressed("Parry") and parry_cd.is_stopped() and parry_window.is_stopped() and !dodging and mirror_shards_current > 0:
 		is_parrying = true
-		mirror_shards_current = mirror_shards_current - 1
-		mirror_shard_change.emit()
+		change_mirror_shard(-1)
 		print("ur shards are currently ",mirror_shards_current)
 		$ParryWindow.visible = true
 		print("you started parrying")
@@ -113,6 +113,19 @@ func calculate_target_pos(pos_y): #idk i didnt write this
 
 	return camera.global_position+dir*(target_y/dir.y)
 
-#func _on_m_shart_regen_timer_timeout() -> void:
-	#print("gay")
-	#mirror_shards_current = mirror_shards_current + 1
+func increase_mirror_shard_max():
+	mirror_shards_max = mirror_shards_max + 1
+	mirror_shards_current = mirror_shards_max
+	mirror_shard_change.emit()
+	print("mirrors shards increased to ",mirror_shards_max)
+
+func _on_m_shart_regen_timer_timeout() -> void:
+	print("gay")
+	change_mirror_shard(1)
+	
+func change_mirror_shard(change):
+	if not mirror_shards_current + change > mirror_shards_max:
+		mirror_shards_current = mirror_shards_current + change
+	else:
+		mirror_shards_current = mirror_shards_max
+	mirror_shard_change.emit()

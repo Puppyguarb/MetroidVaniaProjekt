@@ -11,7 +11,7 @@ func activate_tracking(): #this makes it green when parried
 	boolhit.material_override = GREEN_MAT
 	print("your parry hit")
 
-func _physics_process(delta:float) -> void: #this tracks the bullet back to its creator
+func _physics_process(_delta:float) -> void: #this tracks the bullet back to its creator
 	if !is_tracking:
 		return
 	var dir:Vector3 = origin.global_position-global_position

@@ -16,7 +16,3 @@ func get_mouse_pos():
 	var raycast_result = space.intersect_ray(ray_query)
 	if raycast_result.is_empty() :return
 	return raycast_result["position"]
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
