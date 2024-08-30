@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cxka03nbevc3u"]
+[gd_scene load_steps=5 format=3 uid="uid://cxka03nbevc3u"]
 
 [ext_resource type="Script" path="res://spittah_bullet.gd" id="1_4xapq"]
+[ext_resource type="Material" uid="uid://bcyw470ychbr6" path="res://Materials/Blue.tres" id="2_hofto"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_8yg0u"]
 
@@ -15,4 +16,12 @@ script = ExtResource("1_4xapq")
 shape = SubResource("SphereShape3D_8yg0u")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("2_hofto")
 mesh = SubResource("SphereMesh_kpsg7")
+
+[node name="BulletDeleteTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="BulletDeleteTimer" to="." method="_on_bullet_delete_timer_timeout"]
