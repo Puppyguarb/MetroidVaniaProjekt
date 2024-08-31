@@ -97,6 +97,7 @@ material_override = ExtResource("4_8y12a")
 mesh = SubResource("BoxMesh_w5j2j")
 
 [node name="MShartRegenTimer" type="Timer" parent="."]
+wait_time = 5.0
 one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

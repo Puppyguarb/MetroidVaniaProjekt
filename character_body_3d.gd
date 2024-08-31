@@ -42,8 +42,9 @@ func _process(_delta):
 		print("too many shards faggot")
 		mirror_shards_current = mirror_shards_max
 		mirror_shard_change.emit()
-	if mirror_shards_current < mirror_shards_max and $MShartRegenTimer.is_stopped:
+	if mirror_shards_current < mirror_shards_max and $MShartRegenTimer.is_stopped():
 		$MShartRegenTimer.start()
+		print("timerstart")
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
