@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://xqgm4im8qfv1"]
+[gd_scene load_steps=19 format=3 uid="uid://xqgm4im8qfv1"]
 
 [ext_resource type="Script" path="res://character_body_3d.gd" id="1_j40xc"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="2_kj52q"]
@@ -19,9 +19,18 @@ size = Vector3(2.12842, 2.55768, 0.460358)
 
 [sub_resource type="PrismMesh" id="PrismMesh_b111u"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcl3v"]
+cull_mode = 2
+vertex_color_use_as_albedo = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_disvr"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_dcl3v")
+add_uv2 = true
+subdivide_width = 6
+subdivide_depth = 10
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_66fwo"]
-height = 1.89548
-radius = 0.707225
 
 [sub_resource type="BoxMesh" id="BoxMesh_sp7mh"]
 
@@ -86,11 +95,46 @@ script = ExtResource("2_kj52q")
 
 [node name="PlayerMesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
+transform = Transform3D(1, 0.000573387, 0.000327238, -0.00057289, 0.999999, -0.00152105, -0.000328107, 0.00152086, 0.999999, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_l1k88")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerMesh"]
 transform = Transform3D(0.25, 0, 0, 0, -1.09278e-08, 0.25, 0, -0.25, -1.09278e-08, 0, 0, -1.2106)
 mesh = SubResource("PrismMesh_b111u")
+
+[node name="SoftBody3D" type="SoftBody3D" parent="PlayerMesh"]
+transform = Transform3D(0.999999, -1.65551e-06, 0.00114569, 0.00114569, 0.00304214, -0.999995, -1.8299e-06, 0.999995, 0.00304214, 0.000540099, 0.375686, -1.06932)
+mesh = SubResource("QuadMesh_disvr")
+collision_layer = 0
+collision_mask = 7
+pinned_points = [88, 89, 90, 91, 95, 94, 93, 92]
+attachments/0/point_index = 88
+attachments/0/spatial_attachment_path = NodePath("../CapeAttachementPoint")
+attachments/0/offset = Vector3(-0.499989, -0.0607952, 0.00669736)
+attachments/1/point_index = 89
+attachments/1/spatial_attachment_path = NodePath("../CapeAttachementPoint")
+attachments/1/offset = Vector3(-0.357132, -0.0607952, 0.00669736)
+attachments/2/point_index = 90
+attachments/2/spatial_attachment_path = NodePath("../CapeAttachementPoint")
+attachments/2/offset = Vector3(-0.214274, -0.0607952, 0.00669736)
+attachments/3/point_index = 91
+attachments/3/spatial_attachment_path = NodePath("../CapeAttachementPoint")
+attachments/3/offset = Vector3(-0.0714173, -0.0607952, 0.00669736)
+attachments/4/point_index = 95
+attachments/4/spatial_attachment_path = NodePath("../CapeAttachementPoint")
+attachments/4/offset = Vector3(0.500011, -0.0607952, 0.00669736)
+attachments/5/point_index = 94
+attachments/5/spatial_attachment_path = NodePath("../CapeAttachementPoint")
+attachments/5/offset = Vector3(0.357154, -0.0607952, 0.00669736)
+attachments/6/point_index = 93
+attachments/6/spatial_attachment_path = NodePath("../CapeAttachementPoint")
+attachments/6/offset = Vector3(0.214297, -0.0607952, 0.00669736)
+attachments/7/point_index = 92
+attachments/7/spatial_attachment_path = NodePath("../CapeAttachementPoint")
+attachments/7/offset = Vector3(0.0714398, -0.0607952, 0.00669736)
+
+[node name="CapeAttachementPoint" type="Node3D" parent="PlayerMesh"]
+transform = Transform3D(-0.999999, -0.00114578, 1.65545e-06, -0.00114578, 0.999995, -0.0030421, 1.83022e-06, -0.0030421, -0.999995, 0.000480882, 0.438022, -0.562805)
 
 [node name="Area3D" type="Area3D" parent="."]
 collision_layer = 0
