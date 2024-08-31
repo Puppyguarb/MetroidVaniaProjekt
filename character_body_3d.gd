@@ -2,9 +2,11 @@ class_name Player
 
 extends CharacterBody3D
 
+const SPEED_NORMAL = 5.0
+const SPEED_PARRY = 2.5
+
 var is_parrying = false
-const DEFAULT_SPEED = 5.0
-var SPEED = 5.0
+var speed = SPEED_NORMAL
 const JUMP_VELOCITY = 4.5
 @onready var parry_window = %ParryWindowTimer
 @onready var parry_cd = %ParryCdTimer
@@ -21,6 +23,8 @@ var look_dir = Vector3.ZERO
 
 @onready var camera = %Camera3D
 
+var input_dir := Vector2.ZERO
+
 func _ready() -> void:
 	Singleton.player = self
 
@@ -30,17 +34,19 @@ func dodge():
 	dodge_cooldown = default_dodge_cooldown
 	dodge_speed = 3
 	dodging = true
+	set_collision_layer_value(1,false)
 	await get_tree().create_timer(0.5).timeout
 	dodge_speed = 1
 	dodging = false
 	if is_parrying == true and dodging == false:
-		SPEED = DEFAULT_SPEED * 0.5
+		speed = SPEED_NORMAL * 0.5
+	set_collision_layer_value(1,true)
 
 func _process(_delta):
 	$DebugBox.global_position = calculate_target_pos(global_position.y - 1)
 	look_dir = ($DebugBox.global_position - global_position).normalized()
-	
-	
+	if not dodging:
+		input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	#mirror shards stuff
 	if mirror_shards_current > mirror_shards_max:
 		mirror_shards_current = mirror_shards_max
@@ -63,19 +69,19 @@ func _physics_process(delta: float) -> void:
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
+
 	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	if direction:
-		velocity.x = direction.x * SPEED * dodge_speed
-		velocity.z = direction.z * SPEED * dodge_speed
+		velocity.x = direction.x * speed * dodge_speed
+		velocity.z = direction.z * speed * dodge_speed
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
+		velocity.x = move_toward(velocity.x, 0, speed)
+		velocity.z = move_toward(velocity.z, 0, speed)
 	dodge_cooldown -= delta
 	move_and_slide()
 
 
-func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit/parry detection 
+func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit/parry detection
 	if body is not Bullet:
 		return
 	await get_tree().create_timer(0.2).timeout
@@ -90,13 +96,16 @@ func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit/parry detectio
 # and !dodging
 func _input(event: InputEvent) -> void: #detects parry input
 	if event.is_action_pressed("Parry") and parry_cd.is_stopped() and parry_window.is_stopped() and mirror_shards_current > 0:
-		is_parrying = true
-		change_mirror_shard(-1)
-		change_parry_state(true)
-		parry_window.start()
+		parry()
 
-	if Input.is_action_pressed("Dodge") and !is_parrying: #detects dodge input
+	if Input.is_action_pressed("Dodge") and !is_parrying and not input_dir == Vector2.ZERO: #detects dodge input
 		dodge()
+func parry():
+	is_parrying = true
+	change_mirror_shard(-1)
+	change_parry_state(true)
+	parry_window.start()
+
 
 func _on_parry_window_timer_timeout() -> void: #triggers when parry window closes, starts cooldown
 	is_parrying = false
@@ -109,9 +118,9 @@ func change_parry_state(value):
 	%CrappyShield.visible = value
 	%ShieldCollision.disabled = not value
 	if not dodging and value == true:
-		SPEED = DEFAULT_SPEED*0.5
+		speed = SPEED_NORMAL*0.5
 	elif value == false:
-		SPEED = DEFAULT_SPEED
+		speed = SPEED_NORMAL
 
 func _on_parry_cd_timer_timeout() -> void: #parry cooldown
 	$ParryCoolDown.visible = false

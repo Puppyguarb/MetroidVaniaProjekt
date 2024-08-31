@@ -55,6 +55,7 @@ corner_radius_bottom_right = 124
 corner_radius_bottom_left = 124
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
+collision_layer = 0
 script = ExtResource("1_j40xc")
 
 [node name="ParryBox" type="Area3D" parent="."]
