@@ -17,3 +17,4 @@ func _on_area_3d_body_entered(body: Node3D) -> void: #this detects and deletes p
 	if body.is_tracking and not body.is_queued_for_deletion():
 		body.queue_free()
 		print("your projectile hit")
+	#Singleton.player.scale =Vector3(0.1,0.1,0.1)

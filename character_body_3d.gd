@@ -19,6 +19,9 @@ signal mirror_shard_change
 
 @onready var camera = %Camera3D
 
+func _ready() -> void:
+	Singleton.player = self
+
 func dodge():
 	if dodge_cooldown > 0:
 		return

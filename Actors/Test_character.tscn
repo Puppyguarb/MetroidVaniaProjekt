@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://xqgm4im8qfv1"]
+[gd_scene load_steps=14 format=3 uid="uid://xqgm4im8qfv1"]
 
 [ext_resource type="Script" path="res://character_body_3d.gd" id="1_j40xc"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="2_kj52q"]
@@ -21,6 +21,22 @@ radius = 0.707225
 [sub_resource type="BoxMesh" id="BoxMesh_k0rbm"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_w5j2j"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_te4ms"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 124
+corner_radius_top_right = 124
+corner_radius_bottom_right = 124
+corner_radius_bottom_left = 124
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 script = ExtResource("1_j40xc")
@@ -85,16 +101,7 @@ one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="Control" type="Control" parent="CanvasLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control"]
-layout_mode = 1
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -105,13 +112,20 @@ theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="Label" type="Label" parent="CanvasLayer/Control/MarginContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_te4ms")
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "shards: 1"
 script = ExtResource("5_ybwnr")
 
-[connection signal="mirror_shard_change" from="." to="CanvasLayer/Control/MarginContainer/Label" method="_on_character_body_3d_mirror_shard_change"]
+[connection signal="mirror_shard_change" from="." to="CanvasLayer/MarginContainer/PanelContainer/Label" method="_on_character_body_3d_mirror_shard_change"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="ParryWindowTimer" to="." method="_on_parry_window_timer_timeout"]
 [connection signal="timeout" from="ParryCdTimer" to="." method="_on_parry_cd_timer_timeout"]

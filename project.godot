@@ -15,6 +15,10 @@ run/main_scene="res://Mane.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Singleton="*res://Singleton.gd"
+
 [file_customization]
 
 folder_colors={
