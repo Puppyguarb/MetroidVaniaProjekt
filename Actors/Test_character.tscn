@@ -8,7 +8,7 @@
 [ext_resource type="Script" path="res://Actors/label.gd" id="5_ybwnr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_et0lu"]
-size = Vector3(2.92197, 2.39296, 1.0834)
+size = Vector3(2.92197, 2.39296, 1.29014)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lwfux"]
 size = Vector3(2.12842, 2.55768, 0.460358)
@@ -63,7 +63,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ParryBox"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0839996, 0.107567, -0.744155)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0839996, 0.107567, -0.847524)
 shape = SubResource("BoxShape3D_et0lu")
 
 [node name="Shield" type="StaticBody3D" parent="ParryBox"]
@@ -110,28 +110,28 @@ collision_mask = 7
 pinned_points = [88, 89, 90, 91, 95, 94, 93, 92]
 attachments/0/point_index = 88
 attachments/0/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/0/offset = Vector3(-0.499989, -0.0607952, 0.00669736)
+attachments/0/offset = Vector3(-0.499989, -0.0607949, 0.00670254)
 attachments/1/point_index = 89
 attachments/1/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/1/offset = Vector3(-0.357132, -0.0607952, 0.00669736)
+attachments/1/offset = Vector3(-0.357132, -0.0607948, 0.00670254)
 attachments/2/point_index = 90
 attachments/2/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/2/offset = Vector3(-0.214274, -0.0607952, 0.00669736)
+attachments/2/offset = Vector3(-0.214274, -0.0607948, 0.00670254)
 attachments/3/point_index = 91
 attachments/3/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/3/offset = Vector3(-0.0714173, -0.0607952, 0.00669736)
+attachments/3/offset = Vector3(-0.0714173, -0.0607948, 0.00670254)
 attachments/4/point_index = 95
 attachments/4/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/4/offset = Vector3(0.500011, -0.0607952, 0.00669736)
+attachments/4/offset = Vector3(0.500011, -0.0607948, 0.00670254)
 attachments/5/point_index = 94
 attachments/5/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/5/offset = Vector3(0.357154, -0.0607952, 0.00669736)
+attachments/5/offset = Vector3(0.357154, -0.0607948, 0.00670254)
 attachments/6/point_index = 93
 attachments/6/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/6/offset = Vector3(0.214297, -0.0607952, 0.00669736)
+attachments/6/offset = Vector3(0.214297, -0.0607948, 0.00670254)
 attachments/7/point_index = 92
 attachments/7/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/7/offset = Vector3(0.0714398, -0.0607952, 0.00669736)
+attachments/7/offset = Vector3(0.0714398, -0.0607948, 0.00670254)
 
 [node name="CapeAttachementPoint" type="Node3D" parent="PlayerMesh"]
 transform = Transform3D(-0.999999, -0.00114578, 1.65545e-06, -0.00114578, 0.999995, -0.0030421, 1.83022e-06, -0.0030421, -0.999995, 0.000480882, 0.438022, -0.562805)

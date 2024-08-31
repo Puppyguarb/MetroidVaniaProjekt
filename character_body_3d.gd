@@ -3,6 +3,7 @@ class_name Player
 extends CharacterBody3D
 
 var is_parrying = false
+const DEFAULT_SPEED = 5.0
 var SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 @onready var parry_window = %ParryWindowTimer
@@ -10,7 +11,7 @@ const JUMP_VELOCITY = 4.5
 var is_immune = false
 var immune_time = 0.0
 var dodge_cooldown = 0.0
-var default_dodge_cooldown = 2.0
+var default_dodge_cooldown = 0.8
 var dodging = false
 var dodge_speed = 1
 var mirror_shards_current = 1
@@ -32,6 +33,8 @@ func dodge():
 	await get_tree().create_timer(0.5).timeout
 	dodge_speed = 1
 	dodging = false
+	if is_parrying == true and dodging == false:
+		SPEED = DEFAULT_SPEED * 0.5
 
 func _process(_delta):
 	$DebugBox.global_position = calculate_target_pos(global_position.y - 1)
@@ -84,11 +87,10 @@ func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit/parry detectio
 			change_mirror_shard(1)
 		if not dodging and not is_parrying:
 			pass #damage code woo
-
+# and !dodging
 func _input(event: InputEvent) -> void: #detects parry input
-	if event.is_action_pressed("Parry") and parry_cd.is_stopped() and parry_window.is_stopped() and !dodging and mirror_shards_current > 0:
+	if event.is_action_pressed("Parry") and parry_cd.is_stopped() and parry_window.is_stopped() and mirror_shards_current > 0:
 		is_parrying = true
-		SPEED = 2.5
 		change_mirror_shard(-1)
 		change_parry_state(true)
 		parry_window.start()
@@ -99,7 +101,6 @@ func _input(event: InputEvent) -> void: #detects parry input
 func _on_parry_window_timer_timeout() -> void: #triggers when parry window closes, starts cooldown
 	is_parrying = false
 	change_parry_state(false)
-	SPEED = 5.0
 	$ParryCoolDown.visible = true
 	parry_cd.start()
 
@@ -107,6 +108,10 @@ func change_parry_state(value):
 	$ParryWindow.visible = value
 	%CrappyShield.visible = value
 	%ShieldCollision.disabled = not value
+	if not dodging and value == true:
+		SPEED = DEFAULT_SPEED*0.5
+	elif value == false:
+		SPEED = DEFAULT_SPEED
 
 func _on_parry_cd_timer_timeout() -> void: #parry cooldown
 	$ParryCoolDown.visible = false
