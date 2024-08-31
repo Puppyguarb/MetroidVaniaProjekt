@@ -3,7 +3,7 @@ class_name Player
 extends CharacterBody3D
 
 var is_parrying = false
-const SPEED = 5.0
+var SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 @onready var parry_window = %ParryWindowTimer
 @onready var parry_cd = %ParryCdTimer
@@ -16,6 +16,7 @@ var dodge_speed = 1
 var mirror_shards_current = 1
 var mirror_shards_max = 1
 signal mirror_shard_change
+var look_dir = Vector3.ZERO
 
 @onready var camera = %Camera3D
 
@@ -34,23 +35,25 @@ func dodge():
 
 func _process(_delta):
 	$DebugBox.global_position = calculate_target_pos(global_position.y - 1)
-	var dir = ($DebugBox.global_position - global_position).normalized()
-	%PlayerMesh.rotation.y = atan2(dir.x,dir.z) + PI
+	look_dir = ($DebugBox.global_position - global_position).normalized()
+	
 	
 	#mirror shards stuff
 	if mirror_shards_current > mirror_shards_max:
-		print("too many shards faggot")
 		mirror_shards_current = mirror_shards_max
 		mirror_shard_change.emit()
 	if mirror_shards_current < mirror_shards_max and $MShartRegenTimer.is_stopped():
 		$MShartRegenTimer.start()
-		print("timerstart")
+	if mirror_shards_current > 0 and !($MShartRegenTimer.is_stopped()):
+		$MShartRegenTimer.stop()
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-
+	%PlayerMesh.rotation.y = atan2(look_dir.x,look_dir.z) + PI
+	if not is_parrying:
+		%ParryBox.rotation.y = atan2(look_dir.x,look_dir.z) + PI
 	# Handle jump.
 	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
@@ -75,24 +78,19 @@ func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit/parry detectio
 	await get_tree().create_timer(0.2).timeout
 	if not body:
 		return
-	if not body.is_queued_for_deletion():
-		if is_parrying:
-			body.activate_tracking()
-		else:
-			body.queue_free()
+	if not body.is_queued_for_deletion() and not is_parrying:
+		body.queue_free()
 		if dodging:
-			print("you dodged")
 			change_mirror_shard(1)
 		if not dodging and not is_parrying:
-			print("you took damage")
+			pass #damage code woo
 
 func _input(event: InputEvent) -> void: #detects parry input
 	if event.is_action_pressed("Parry") and parry_cd.is_stopped() and parry_window.is_stopped() and !dodging and mirror_shards_current > 0:
 		is_parrying = true
+		SPEED = 2.5
 		change_mirror_shard(-1)
-		print("ur shards are currently ",mirror_shards_current)
-		$ParryWindow.visible = true
-		print("you started parrying")
+		change_parry_state(true)
 		parry_window.start()
 
 	if Input.is_action_pressed("Dodge") and !is_parrying: #detects dodge input
@@ -100,9 +98,15 @@ func _input(event: InputEvent) -> void: #detects parry input
 
 func _on_parry_window_timer_timeout() -> void: #triggers when parry window closes, starts cooldown
 	is_parrying = false
-	$ParryWindow.visible = false
+	change_parry_state(false)
+	SPEED = 5.0
 	$ParryCoolDown.visible = true
 	parry_cd.start()
+
+func change_parry_state(value):
+	$ParryWindow.visible = value
+	%CrappyShield.visible = value
+	%ShieldCollision.disabled = not value
 
 func _on_parry_cd_timer_timeout() -> void: #parry cooldown
 	$ParryCoolDown.visible = false
@@ -121,15 +125,23 @@ func increase_mirror_shard_max():
 	mirror_shards_max = mirror_shards_max + 1
 	mirror_shards_current = mirror_shards_max
 	mirror_shard_change.emit()
-	print("mirrors shards increased to ",mirror_shards_max)
 
 func _on_m_shart_regen_timer_timeout() -> void:
-	print("gay")
 	change_mirror_shard(1)
-	
+
 func change_mirror_shard(change):
 	if not mirror_shards_current + change > mirror_shards_max:
 		mirror_shards_current = mirror_shards_current + change
 	else:
 		mirror_shards_current = mirror_shards_max
 	mirror_shard_change.emit()
+
+
+func _on_parry_box_body_entered(body: Node3D) -> void:
+	if body is not Bullet:
+		return
+	if not body:
+		return
+	if not body.is_queued_for_deletion():
+		if is_parrying:
+			body.activate_tracking()

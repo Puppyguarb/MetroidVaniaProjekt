@@ -1,10 +1,17 @@
-[gd_scene load_steps=14 format=3 uid="uid://xqgm4im8qfv1"]
+[gd_scene load_steps=17 format=3 uid="uid://xqgm4im8qfv1"]
 
 [ext_resource type="Script" path="res://character_body_3d.gd" id="1_j40xc"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="2_kj52q"]
+[ext_resource type="PackedScene" uid="uid://ycpmpctelptn" path="res://3DModels/CrappyShield.fbx" id="3_euiyl"]
 [ext_resource type="Material" uid="uid://cg81h1albtdku" path="res://Materials/Green.tres" id="3_yf06v"]
 [ext_resource type="Material" uid="uid://flq8j3d0aw7h" path="res://Materials/Red.tres" id="4_8y12a"]
 [ext_resource type="Script" path="res://Actors/label.gd" id="5_ybwnr"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_et0lu"]
+size = Vector3(2.92197, 2.39296, 1.0834)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lwfux"]
+size = Vector3(2.12842, 2.55768, 0.460358)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1is6h"]
 
@@ -40,6 +47,29 @@ corner_radius_bottom_left = 124
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 script = ExtResource("1_j40xc")
+
+[node name="ParryBox" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ParryBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0839996, 0.107567, -0.744155)
+shape = SubResource("BoxShape3D_et0lu")
+
+[node name="Shield" type="StaticBody3D" parent="ParryBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0606431)
+
+[node name="CrappyShield" parent="ParryBox/Shield" instance=ExtResource("3_euiyl")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0940179, 0.0883337, -1.06265)
+visible = false
+
+[node name="ShieldCollision" type="CollisionShape3D" parent="ParryBox/Shield"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.124047, 0.0859839, -1.05165)
+shape = SubResource("BoxShape3D_lwfux")
+disabled = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_1is6h")
@@ -123,10 +153,11 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_te4ms")
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
-text = "shards: 1"
+text = "Mirror Sharts: 1/1"
 script = ExtResource("5_ybwnr")
 
 [connection signal="mirror_shard_change" from="." to="CanvasLayer/MarginContainer/PanelContainer/Label" method="_on_character_body_3d_mirror_shard_change"]
+[connection signal="body_entered" from="ParryBox" to="." method="_on_parry_box_body_entered"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="ParryWindowTimer" to="." method="_on_parry_window_timer_timeout"]
 [connection signal="timeout" from="ParryCdTimer" to="." method="_on_parry_cd_timer_timeout"]

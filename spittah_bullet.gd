@@ -9,7 +9,6 @@ const GREEN_MAT = preload("res://Materials/Green.tres")
 func activate_tracking(): #this makes it green when parried
 	is_tracking = true
 	boolhit.material_override = GREEN_MAT
-	print("your parry hit")
 
 func _physics_process(_delta:float) -> void: #this tracks the bullet back to its creator
 	if !is_tracking:
