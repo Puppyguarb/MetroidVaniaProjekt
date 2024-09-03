@@ -152,11 +152,8 @@ func _on_parry_cd_timer_timeout() -> void: #parry cooldown
 func calculate_target_pos(pos_y): #idk i didnt write this
 	var mouse_2d_pos = get_viewport().get_mouse_position()
 	var mouse_world_pos = camera.project_position(mouse_2d_pos,1) #project_ray_origin
-
 	var dir = (mouse_world_pos - camera.global_position).normalized()
-
 	var target_y = pos_y - camera.global_position.y
-
 	return camera.global_position+dir*(target_y/dir.y)
 
 func increase_mirror_shard_max(increaseamount):
