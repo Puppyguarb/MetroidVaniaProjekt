@@ -57,7 +57,6 @@ corner_radius_bottom_right = 124
 corner_radius_bottom_left = 124
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
-collision_layer = 9
 script = ExtResource("1_j40xc")
 
 [node name="ParryBox" type="Area3D" parent="."]
@@ -113,28 +112,28 @@ collision_mask = 7
 pinned_points = [88, 89, 90, 91, 95, 94, 93, 92]
 attachments/0/point_index = 88
 attachments/0/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/0/offset = Vector3(0.519765, -0.0619633, -1.14561)
+attachments/0/offset = Vector3(0.519765, -0.0619636, -1.14561)
 attachments/1/point_index = 89
 attachments/1/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/1/offset = Vector3(0.376919, -0.0621296, -1.14738)
+attachments/1/offset = Vector3(0.376919, -0.06213, -1.14738)
 attachments/2/point_index = 90
 attachments/2/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/2/offset = Vector3(0.234073, -0.062296, -1.14916)
+attachments/2/offset = Vector3(0.234073, -0.0622964, -1.14916)
 attachments/3/point_index = 91
 attachments/3/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/3/offset = Vector3(0.0912272, -0.0624623, -1.15093)
+attachments/3/offset = Vector3(0.0912272, -0.0624627, -1.15093)
 attachments/4/point_index = 95
 attachments/4/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/4/offset = Vector3(-0.480157, -0.0631278, -1.15803)
+attachments/4/offset = Vector3(-0.480157, -0.0631282, -1.15803)
 attachments/5/point_index = 94
 attachments/5/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/5/offset = Vector3(-0.337311, -0.0629614, -1.15626)
+attachments/5/offset = Vector3(-0.337311, -0.0629618, -1.15626)
 attachments/6/point_index = 93
 attachments/6/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/6/offset = Vector3(-0.194465, -0.0627951, -1.15448)
+attachments/6/offset = Vector3(-0.194465, -0.0627955, -1.15448)
 attachments/7/point_index = 92
 attachments/7/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/7/offset = Vector3(-0.0516187, -0.0626287, -1.15271)
+attachments/7/offset = Vector3(-0.0516188, -0.0626291, -1.15271)
 
 [node name="CapeAttachementPoint" type="Node3D" parent="PlayerMesh"]
 transform = Transform3D(-0.999999, -0.00114578, 1.65545e-06, -0.00114578, 0.999995, -0.0030421, 1.83022e-06, -0.0030421, -0.999995, 0.000480882, 0.438022, -0.562805)
@@ -142,7 +141,7 @@ transform = Transform3D(-0.999999, -0.00114578, 1.65545e-06, -0.00114578, 0.9999
 [node name="Area3D" type="Area3D" parent="."]
 unique_name_in_owner = true
 collision_layer = 0
-collision_mask = 2
+collision_mask = 10
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CylinderShape3D_66fwo")
@@ -158,7 +157,7 @@ wait_time = 0.25
 one_shot = true
 
 [node name="PerfectParryWindowTimer" type="Timer" parent="."]
-wait_time = 0.1
+wait_time = 0.05
 
 [node name="ParryWindow" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 1, 0)

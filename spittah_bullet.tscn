@@ -8,7 +8,8 @@
 [sub_resource type="SphereMesh" id="SphereMesh_kpsg7"]
 
 [node name="RigidBody3D" type="RigidBody3D"]
-collision_layer = 2
+collision_layer = 10
+collision_mask = 9
 gravity_scale = 0.0
 script = ExtResource("1_4xapq")
 

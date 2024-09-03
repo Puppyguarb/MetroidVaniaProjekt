@@ -25,6 +25,8 @@ var current_hp = 2
 var max_hp = 2
 var dead = 0
 var current_level = "res://Mane.tscn"
+var is_perfect = 0
+var invulnerable = 0
 
 @onready var camera = %Camera3D
 
@@ -47,11 +49,13 @@ func dodge():
 		speed = SPEED_NORMAL * 0.5
 
 func invuln(time):
+	invulnerable = 1
 	set_collision_layer_value(1,false)
 	%Area3D.set_collision_mask_value(2,false)
 	await get_tree().create_timer(time).timeout
 	set_collision_layer_value(1,true)
 	%Area3D.set_collision_mask_value(2,true)
+	invulnerable = 0
 
 func _process(_delta):
 	$DebugBox.global_position = calculate_target_pos(global_position.y - 1)
@@ -92,12 +96,6 @@ func _physics_process(delta: float) -> void:
 	dodge_cooldown -= delta
 	if dead == 0:
 		move_and_slide()
-	
-	if dead == 1:
-		%"You Died".visible = true
-		await get_tree().create_timer(3).timeout
-		print("youre dead")
-		get_tree().change_scene_to_file(current_level)
 
 
 func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit/parry detection
@@ -105,7 +103,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit/parry detectio
 		return
 	if dodging:
 		change_mirror_shard(1)
-	if not dodging and not is_parrying:
+	if not dodging and not is_parrying and invulnerable == 0:
 		take_damage(1)
 	await get_tree().create_timer(0.2).timeout
 	if not body:
@@ -119,11 +117,18 @@ func _input(event: InputEvent) -> void: #detects parry input
 
 	if Input.is_action_pressed("Dodge") and !is_parrying and not input_dir == Vector2.ZERO: #detects dodge input
 		dodge()
+
 func parry():
 	is_parrying = true
+	perfectparry()
 	change_mirror_shard(-1)
 	change_parry_state(true)
 	parry_window.start()
+
+func perfectparry():
+	is_perfect = 1
+	await get_tree().create_timer(0.1).timeout
+	is_perfect = 0
 
 
 func _on_parry_window_timer_timeout() -> void: #triggers when parry window closes, starts cooldown
@@ -154,8 +159,8 @@ func calculate_target_pos(pos_y): #idk i didnt write this
 
 	return camera.global_position+dir*(target_y/dir.y)
 
-func increase_mirror_shard_max():
-	mirror_shards_max = mirror_shards_max + 1
+func increase_mirror_shard_max(increaseamount):
+	mirror_shards_max = mirror_shards_max + increaseamount
 	mirror_shards_current = mirror_shards_max
 	mirror_shard_change.emit()
 
@@ -183,16 +188,25 @@ func take_damage(change):
 			current_hp = max_hp
 		health_change.emit()
 
-func _on_parry_box_body_entered(body: Node3D) -> void:
+func _on_parry_box_body_entered(body: Node3D) -> void: #handles bullet parrying
 	if body is not Bullet:
 		return
 	if not body:
 		return
 	if not body.is_queued_for_deletion():
-		if is_parrying:
+		if is_parrying and is_perfect:
+			body.activate_tracking()
+			body.is_perfect = 1
+			change_mirror_shard(1)
+		elif is_parrying:
 			body.activate_tracking()
 
 func die():
 	current_hp = 0
 	dead = 1
 	health_change.emit()
+	if dead == 1:
+		%"You Died".visible = true
+		await get_tree().create_timer(3).timeout
+		print("youre dead")
+		get_tree().change_scene_to_file(current_level)
