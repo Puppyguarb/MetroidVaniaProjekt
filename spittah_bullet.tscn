@@ -13,6 +13,7 @@ gravity_scale = 0.0
 script = ExtResource("1_4xapq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
 shape = SubResource("SphereShape3D_8yg0u")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]

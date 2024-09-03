@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://tleg8bhcnima"]
+
+[ext_resource type="Material" uid="uid://cg81h1albtdku" path="res://Materials/Green.tres" id="1_suinb"]
+[ext_resource type="Script" path="res://waltuh.gd" id="2_k7ota"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_rshvw"]
+material = ExtResource("1_suinb")
+
+[node name="Waltuh" type="MeshInstance3D"]
+mesh = SubResource("CapsuleMesh_rshvw")
+script = ExtResource("2_k7ota")
+
+[node name="Direction Facing" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 0)

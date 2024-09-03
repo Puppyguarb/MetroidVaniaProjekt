@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://8ofimlpj6xgb"]
+[gd_scene load_steps=11 format=3 uid="uid://8ofimlpj6xgb"]
 
 [ext_resource type="PackedScene" uid="uid://xqgm4im8qfv1" path="res://Actors/Test_character.tscn" id="1_xp2jq"]
 [ext_resource type="PackedScene" uid="uid://b6lxmc6t5c1i8" path="res://spittah.tscn" id="2_dm7y5"]
 [ext_resource type="PackedScene" uid="uid://c2ryv45tgr5u5" path="res://mirror_shard_collectible.tscn" id="3_8c47k"]
+[ext_resource type="PackedScene" uid="uid://tleg8bhcnima" path="res://waltuh.tscn" id="4_x70ej"]
+[ext_resource type="PackedScene" uid="uid://cxka03nbevc3u" path="res://spittah_bullet.tscn" id="5_b4ikc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x7ln8"]
 
@@ -47,3 +49,9 @@ transform = Transform3D(-0.591282, 0.806465, -3.52517e-08, 0, -4.37114e-08, -1, 
 
 [node name="Mirror Shard Collectible" parent="." instance=ExtResource("3_8c47k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.125438, -6)
+
+[node name="Waltuh" parent="." instance=ExtResource("4_x70ej")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.79625, 0.522212, -2.2955)
+
+[node name="RigidBody3D" parent="." instance=ExtResource("5_b4ikc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.39186, -0.292377, 0.549472)

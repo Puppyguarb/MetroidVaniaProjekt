@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://xqgm4im8qfv1"]
+[gd_scene load_steps=21 format=3 uid="uid://xqgm4im8qfv1"]
 
 [ext_resource type="Script" path="res://character_body_3d.gd" id="1_j40xc"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="2_kj52q"]
@@ -6,6 +6,8 @@
 [ext_resource type="Material" uid="uid://cg81h1albtdku" path="res://Materials/Green.tres" id="3_yf06v"]
 [ext_resource type="Material" uid="uid://flq8j3d0aw7h" path="res://Materials/Red.tres" id="4_8y12a"]
 [ext_resource type="Script" path="res://Actors/label.gd" id="5_ybwnr"]
+[ext_resource type="Script" path="res://Actors/label_2.gd" id="7_fbshb"]
+[ext_resource type="Texture2D" uid="uid://d054pjvsssua1" path="res://how did you die to that.png" id="8_aagl6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_et0lu"]
 size = Vector3(2.92197, 2.39296, 1.29014)
@@ -55,7 +57,7 @@ corner_radius_bottom_right = 124
 corner_radius_bottom_left = 124
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
-collision_layer = 0
+collision_layer = 9
 script = ExtResource("1_j40xc")
 
 [node name="ParryBox" type="Area3D" parent="."]
@@ -104,40 +106,41 @@ transform = Transform3D(0.25, 0, 0, 0, -1.09278e-08, 0.25, 0, -0.25, -1.09278e-0
 mesh = SubResource("PrismMesh_b111u")
 
 [node name="SoftBody3D" type="SoftBody3D" parent="PlayerMesh"]
-transform = Transform3D(0.999999, -1.65551e-06, 0.00114569, 0.00114569, 0.00304214, -0.999995, -1.8299e-06, 0.999995, 0.00304214, 0.000540099, 0.375686, -1.06932)
+transform = Transform3D(-0.999922, 0.0124263, 1.90346e-05, -1.89441e-05, 7.28155e-06, -1, -0.0124262, -0.999922, -7.04452e-06, -0.0254667, 0.378954, 1.08916)
 mesh = SubResource("QuadMesh_disvr")
 collision_layer = 0
 collision_mask = 7
 pinned_points = [88, 89, 90, 91, 95, 94, 93, 92]
 attachments/0/point_index = 88
 attachments/0/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/0/offset = Vector3(-0.499989, -0.0607949, 0.00670254)
+attachments/0/offset = Vector3(0.519765, -0.0619633, -1.14561)
 attachments/1/point_index = 89
 attachments/1/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/1/offset = Vector3(-0.357132, -0.0607948, 0.00670254)
+attachments/1/offset = Vector3(0.376919, -0.0621296, -1.14738)
 attachments/2/point_index = 90
 attachments/2/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/2/offset = Vector3(-0.214274, -0.0607948, 0.00670254)
+attachments/2/offset = Vector3(0.234073, -0.062296, -1.14916)
 attachments/3/point_index = 91
 attachments/3/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/3/offset = Vector3(-0.0714173, -0.0607948, 0.00670254)
+attachments/3/offset = Vector3(0.0912272, -0.0624623, -1.15093)
 attachments/4/point_index = 95
 attachments/4/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/4/offset = Vector3(0.500011, -0.0607948, 0.00670254)
+attachments/4/offset = Vector3(-0.480157, -0.0631278, -1.15803)
 attachments/5/point_index = 94
 attachments/5/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/5/offset = Vector3(0.357154, -0.0607948, 0.00670254)
+attachments/5/offset = Vector3(-0.337311, -0.0629614, -1.15626)
 attachments/6/point_index = 93
 attachments/6/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/6/offset = Vector3(0.214297, -0.0607948, 0.00670254)
+attachments/6/offset = Vector3(-0.194465, -0.0627951, -1.15448)
 attachments/7/point_index = 92
 attachments/7/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/7/offset = Vector3(0.0714398, -0.0607948, 0.00670254)
+attachments/7/offset = Vector3(-0.0516187, -0.0626287, -1.15271)
 
 [node name="CapeAttachementPoint" type="Node3D" parent="PlayerMesh"]
 transform = Transform3D(-0.999999, -0.00114578, 1.65545e-06, -0.00114578, 0.999995, -0.0030421, 1.83022e-06, -0.0030421, -0.999995, 0.000480882, 0.438022, -0.562805)
 
 [node name="Area3D" type="Area3D" parent="."]
+unique_name_in_owner = true
 collision_layer = 0
 collision_mask = 2
 
@@ -146,13 +149,16 @@ shape = SubResource("CylinderShape3D_66fwo")
 
 [node name="ParryWindowTimer" type="Timer" parent="."]
 unique_name_in_owner = true
-wait_time = 0.5
+wait_time = 0.4
 one_shot = true
 
 [node name="ParryCdTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 0.25
 one_shot = true
+
+[node name="PerfectParryWindowTimer" type="Timer" parent="."]
+wait_time = 0.1
 
 [node name="ParryWindow" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 1, 0)
@@ -188,20 +194,47 @@ theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
 
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_te4ms")
 
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/PanelContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer"]
 layout_mode = 2
 size_flags_horizontal = 0
 size_flags_vertical = 0
 text = "Mirror Sharts: 1/1"
 script = ExtResource("5_ybwnr")
 
-[connection signal="mirror_shard_change" from="." to="CanvasLayer/MarginContainer/PanelContainer/Label" method="_on_character_body_3d_mirror_shard_change"]
+[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_te4ms")
+
+[node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer2"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "Hp: 2/2"
+script = ExtResource("7_fbshb")
+
+[node name="You Died" type="TextureRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+offset_left = -384.0
+offset_top = -216.0
+offset_right = 1536.0
+offset_bottom = 864.0
+texture = ExtResource("8_aagl6")
+stretch_mode = 3
+
+[connection signal="health_change" from="." to="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer2/Label2" method="_on_character_body_3d_health_change"]
+[connection signal="mirror_shard_change" from="." to="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer/Label" method="_on_character_body_3d_mirror_shard_change"]
 [connection signal="body_entered" from="ParryBox" to="." method="_on_parry_box_body_entered"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="ParryWindowTimer" to="." method="_on_parry_window_timer_timeout"]

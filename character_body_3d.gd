@@ -10,16 +10,21 @@ var speed = SPEED_NORMAL
 const JUMP_VELOCITY = 4.5
 @onready var parry_window = %ParryWindowTimer
 @onready var parry_cd = %ParryCdTimer
-var is_immune = false
-var immune_time = 0.0
+var is_immune = false #what is this for???
+var immune_time = 0.0 #this too
 var dodge_cooldown = 0.0
-var default_dodge_cooldown = 0.8
+var default_dodge_cooldown = 0.4
 var dodging = false
 var dodge_speed = 1
 var mirror_shards_current = 1
 var mirror_shards_max = 1
 signal mirror_shard_change
+signal health_change
 var look_dir = Vector3.ZERO
+var current_hp = 2
+var max_hp = 2
+var dead = 0
+var current_level = "res://Mane.tscn"
 
 @onready var camera = %Camera3D
 
@@ -32,15 +37,21 @@ func dodge():
 	if dodge_cooldown > 0:
 		return
 	dodge_cooldown = default_dodge_cooldown
-	dodge_speed = 3
+	dodge_speed = 3.5
 	dodging = true
-	set_collision_layer_value(1,false)
-	await get_tree().create_timer(0.5).timeout
+	invuln(0.3)
+	await get_tree().create_timer(0.3).timeout
 	dodge_speed = 1
 	dodging = false
 	if is_parrying == true and dodging == false:
 		speed = SPEED_NORMAL * 0.5
+
+func invuln(time):
+	set_collision_layer_value(1,false)
+	%Area3D.set_collision_mask_value(2,false)
+	await get_tree().create_timer(time).timeout
 	set_collision_layer_value(1,true)
+	%Area3D.set_collision_mask_value(2,true)
 
 func _process(_delta):
 	$DebugBox.global_position = calculate_target_pos(global_position.y - 1)
@@ -60,7 +71,8 @@ func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-	%PlayerMesh.rotation.y = atan2(look_dir.x,look_dir.z) + PI
+	if dead == 0:
+		%PlayerMesh.rotation.y = atan2(look_dir.x,look_dir.z) + PI
 	if not is_parrying:
 		%ParryBox.rotation.y = atan2(look_dir.x,look_dir.z) + PI
 	# Handle jump.
@@ -78,24 +90,31 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, speed)
 		velocity.z = move_toward(velocity.z, 0, speed)
 	dodge_cooldown -= delta
-	move_and_slide()
+	if dead == 0:
+		move_and_slide()
+	
+	if dead == 1:
+		%"You Died".visible = true
+		await get_tree().create_timer(3).timeout
+		print("youre dead")
+		get_tree().change_scene_to_file(current_level)
 
 
 func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit/parry detection
 	if body is not Bullet:
 		return
+	if dodging:
+		change_mirror_shard(1)
+	if not dodging and not is_parrying:
+		take_damage(1)
 	await get_tree().create_timer(0.2).timeout
 	if not body:
 		return
 	if not body.is_queued_for_deletion() and not is_parrying:
 		body.queue_free()
-		if dodging:
-			change_mirror_shard(1)
-		if not dodging and not is_parrying:
-			pass #damage code woo
-# and !dodging
+
 func _input(event: InputEvent) -> void: #detects parry input
-	if event.is_action_pressed("Parry") and parry_cd.is_stopped() and parry_window.is_stopped() and mirror_shards_current > 0:
+	if event.is_action_pressed("Parry") and parry_cd.is_stopped() and parry_window.is_stopped() and mirror_shards_current > 0 and dead == 0:
 		parry()
 
 	if Input.is_action_pressed("Dodge") and !is_parrying and not input_dir == Vector2.ZERO: #detects dodge input
@@ -150,6 +169,19 @@ func change_mirror_shard(change):
 		mirror_shards_current = mirror_shards_max
 	mirror_shard_change.emit()
 
+func take_damage(change):
+	if dead == 1:
+		pass
+	invuln(0.5)
+	change = change*-1
+	if current_hp + change <= 0:
+		die()
+	else:
+		if not current_hp + change > max_hp:
+			current_hp = current_hp + change
+		else:
+			current_hp = max_hp
+		health_change.emit()
 
 func _on_parry_box_body_entered(body: Node3D) -> void:
 	if body is not Bullet:
@@ -159,3 +191,8 @@ func _on_parry_box_body_entered(body: Node3D) -> void:
 	if not body.is_queued_for_deletion():
 		if is_parrying:
 			body.activate_tracking()
+
+func die():
+	current_hp = 0
+	dead = 1
+	health_change.emit()
