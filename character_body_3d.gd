@@ -25,7 +25,7 @@ var current_hp = 2
 var max_hp = 2
 var dead = 0
 var current_level = "res://Mane.tscn"
-var is_perfect = 0
+var is_perfect = false
 var invulnerable = 0
 var bullet_array = []
 
@@ -60,7 +60,7 @@ func invuln(time):
 
 func _process(_delta):
 	$DebugBox.global_position = calculate_target_pos(global_position.y - 1)
-	look_dir = ($DebugBox.global_position - global_position).normalized()
+	look_dir = get_look_dir()
 	if not dodging:
 		input_dir = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	#mirror shards stuff
@@ -72,17 +72,34 @@ func _process(_delta):
 	if mirror_shards_current > 0 and !($MShartRegenTimer.is_stopped()):
 		$MShartRegenTimer.stop()
 	evaluate_parry()
+
+func get_look_dir():
+	return ($DebugBox.global_position - global_position).normalized()
+
 func evaluate_parry():
-	for i in range(0,bullet_array.size(),-1):
+	if not is_parrying:
+		return
+	#Iterate backwards over the bullet array so we can safely delete entries.
+	var array = range(bullet_array.size()-1,-1,-1)
+	
+	for i in array:
 		var bullet = bullet_array[i]
-		print("im in!")
-		if is_parrying and is_perfect:
+		if is_perfect:
 			bullet.activate_tracking()
-			bullet.is_perfect = 1
+			bullet.is_perfect = true
 			change_mirror_shard(1)
-		elif is_parrying and bullet.tier == 1:
-			bullet.activate_tracking()
-		bullet_array.erase(bullet)
+			bullet_array.erase(bullet)
+			continue # Like return, this just makes us move to the next entry in the array.
+		
+		match bullet.tier:
+			1:
+				bullet.activate_tracking()
+				bullet_array.erase(bullet)
+			2:
+				bullet.deflect(get_look_dir())
+				bullet_array.erase(bullet)
+			3:
+				pass # We do nothing for tier 3 bullets, they just pass through the shield.
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -133,15 +150,15 @@ func _input(event: InputEvent) -> void: #detects parry input
 
 func parry():
 	is_parrying = true
-	perfectparry()
+	perfect_parry()
 	change_mirror_shard(-1)
 	change_parry_state(true)
 	parry_window.start()
 
-func perfectparry():
-	is_perfect = 1
+func perfect_parry():
+	is_perfect = true
 	await get_tree().create_timer(0.1).timeout
-	is_perfect = 0
+	is_perfect = false
 
 
 func _on_parry_window_timer_timeout() -> void: #triggers when parry window closes, starts cooldown
@@ -199,14 +216,15 @@ func take_damage(change):
 		health_change.emit()
 
 func _on_parry_box_body_entered(body: Node3D) -> void: #handles bullet parrying
+	
 	if body is not Bullet:
 		return
 	if not body:
 		return
 	if body.is_queued_for_deletion():
 		return
+	
 	bullet_array.append(body)
-	print(bullet_array)
 
 func _on_parry_box_body_exited(body: Node3D) -> void:
 	if body is not Bullet:

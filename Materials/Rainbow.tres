@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://60ympgwx2fo3"]
+
+[ext_resource type="Shader" path="res://Materials/Rainbow.gdshader" id="1_pr3no"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_pr3no")
+shader_parameter/density = 5.0
+shader_parameter/speed = 0.0

@@ -8,7 +8,7 @@
 [sub_resource type="SphereMesh" id="SphereMesh_kpsg7"]
 
 [node name="RigidBody3D" type="RigidBody3D"]
-collision_layer = 10
+collision_layer = 2
 collision_mask = 9
 gravity_scale = 0.0
 script = ExtResource("1_4xapq")
@@ -18,6 +18,7 @@ transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0, 0, 0)
 shape = SubResource("SphereShape3D_8yg0u")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
 material_override = ExtResource("2_hofto")
 mesh = SubResource("SphereMesh_kpsg7")
 

@@ -1,8 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://8ofimlpj6xgb"]
+[gd_scene load_steps=13 format=3 uid="uid://8ofimlpj6xgb"]
 
 [ext_resource type="PackedScene" uid="uid://xqgm4im8qfv1" path="res://Actors/Test_character.tscn" id="1_xp2jq"]
 [ext_resource type="PackedScene" uid="uid://b6lxmc6t5c1i8" path="res://spittah.tscn" id="2_dm7y5"]
+[ext_resource type="Material" uid="uid://bcyw470ychbr6" path="res://Materials/Blue.tres" id="3_6gxs1"]
 [ext_resource type="PackedScene" uid="uid://c2ryv45tgr5u5" path="res://mirror_shard_collectible.tscn" id="3_8c47k"]
+[ext_resource type="Material" uid="uid://c1a6c4bk8tvx6" path="res://Materials/Purple.tres" id="4_3uray"]
 [ext_resource type="PackedScene" uid="uid://tleg8bhcnima" path="res://waltuh.tscn" id="4_x70ej"]
 [ext_resource type="PackedScene" uid="uid://cxka03nbevc3u" path="res://spittah_bullet.tscn" id="5_b4ikc"]
 
@@ -40,9 +42,12 @@ shape = SubResource("BoxShape3D_f0a8o")
 
 [node name="Spitter" parent="." instance=ExtResource("2_dm7y5")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.641172, -0.44468, -6.32213)
+material_override = ExtResource("3_6gxs1")
+spit_tier = 1
 
 [node name="Spitter2" parent="." instance=ExtResource("2_dm7y5")]
 transform = Transform3D(0.998289, -0.0584696, 2.55584e-09, 1.42329e-15, -4.37114e-08, -1, 0.0584696, 0.998289, -4.36366e-08, -3.10861, -0.204136, -5.94241)
+material_override = ExtResource("4_3uray")
 spit_tier = 2
 
 [node name="Spitter3" parent="." instance=ExtResource("2_dm7y5")]
