@@ -6,6 +6,7 @@ var is_perfect = false
 const BlUE_MAT = preload("res://Materials/Blue.tres")
 const GREEN_MAT = preload("res://Materials/Green.tres")
 @onready var boolhit = $MeshInstance3D
+var tier = null
 
 func activate_tracking(): #this makes it green when parried
 	is_tracking = true

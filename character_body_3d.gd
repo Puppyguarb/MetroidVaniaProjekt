@@ -27,6 +27,7 @@ var dead = 0
 var current_level = "res://Mane.tscn"
 var is_perfect = 0
 var invulnerable = 0
+var bullet_array = []
 
 @onready var camera = %Camera3D
 
@@ -70,6 +71,18 @@ func _process(_delta):
 		$MShartRegenTimer.start()
 	if mirror_shards_current > 0 and !($MShartRegenTimer.is_stopped()):
 		$MShartRegenTimer.stop()
+	evaluate_parry()
+func evaluate_parry():
+	for i in range(0,bullet_array.size(),-1):
+		var bullet = bullet_array[i]
+		print("im in!")
+		if is_parrying and is_perfect:
+			bullet.activate_tracking()
+			bullet.is_perfect = 1
+			change_mirror_shard(1)
+		elif is_parrying and bullet.tier == 1:
+			bullet.activate_tracking()
+		bullet_array.erase(bullet)
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
@@ -190,13 +203,15 @@ func _on_parry_box_body_entered(body: Node3D) -> void: #handles bullet parrying
 		return
 	if not body:
 		return
-	if not body.is_queued_for_deletion():
-		if is_parrying and is_perfect:
-			body.activate_tracking()
-			body.is_perfect = 1
-			change_mirror_shard(1)
-		elif is_parrying:
-			body.activate_tracking()
+	if body.is_queued_for_deletion():
+		return
+	bullet_array.append(body)
+	print(bullet_array)
+
+func _on_parry_box_body_exited(body: Node3D) -> void:
+	if body is not Bullet:
+		return
+	bullet_array.erase(body)
 
 func die():
 	current_hp = 0

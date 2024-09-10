@@ -42,10 +42,12 @@ shape = SubResource("BoxShape3D_f0a8o")
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.641172, -0.44468, -6.32213)
 
 [node name="Spitter2" parent="." instance=ExtResource("2_dm7y5")]
-transform = Transform3D(0.801243, 0.598339, -2.61542e-08, 0, -4.37114e-08, -1, -0.598339, 0.801243, -3.50235e-08, -6.72192, -0.204136, -6.72857)
+transform = Transform3D(0.998289, -0.0584696, 2.55584e-09, 1.42329e-15, -4.37114e-08, -1, 0.0584696, 0.998289, -4.36366e-08, -3.10861, -0.204136, -5.94241)
+spit_tier = 2
 
 [node name="Spitter3" parent="." instance=ExtResource("2_dm7y5")]
-transform = Transform3D(-0.591282, 0.806465, -3.52517e-08, 0, -4.37114e-08, -1, -0.806465, -0.591282, 2.58457e-08, -8.22522, -0.497024, 8.10562)
+transform = Transform3D(0.992117, 0.125317, -5.47772e-09, -2.10066e-15, -4.37114e-08, -1, -0.125317, 0.992117, -4.33668e-08, -7.00763, -0.497024, -4.30159)
+spit_tier = 3
 
 [node name="Mirror Shard Collectible" parent="." instance=ExtResource("3_8c47k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.125438, -6)

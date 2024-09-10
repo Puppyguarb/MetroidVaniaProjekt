@@ -69,6 +69,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0839996, 0.107567, -0.8475
 shape = SubResource("BoxShape3D_et0lu")
 
 [node name="Shield" type="StaticBody3D" parent="ParryBox"]
+process_mode = 4
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0606431)
 
 [node name="CrappyShield" parent="ParryBox/Shield" instance=ExtResource("3_euiyl")]
@@ -112,28 +113,28 @@ collision_mask = 7
 pinned_points = [88, 89, 90, 91, 95, 94, 93, 92]
 attachments/0/point_index = 88
 attachments/0/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/0/offset = Vector3(0.5, 0.5, 0)
+attachments/0/offset = Vector3(0.519743, -0.0618634, -1.0798)
 attachments/1/point_index = 89
 attachments/1/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/1/offset = Vector3(0.357143, 0.5, 0)
+attachments/1/offset = Vector3(0.376897, -0.0620298, -1.08157)
 attachments/2/point_index = 90
 attachments/2/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/2/offset = Vector3(0.214286, 0.5, 0)
+attachments/2/offset = Vector3(0.234052, -0.0621962, -1.08335)
 attachments/3/point_index = 91
 attachments/3/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/3/offset = Vector3(0.0714286, 0.5, 0)
+attachments/3/offset = Vector3(0.0912056, -0.0623625, -1.08512)
 attachments/4/point_index = 95
 attachments/4/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/4/offset = Vector3(-0.5, 0.5, 0)
+attachments/4/offset = Vector3(-0.480178, -0.063028, -1.09222)
 attachments/5/point_index = 94
 attachments/5/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/5/offset = Vector3(-0.357143, 0.5, 0)
+attachments/5/offset = Vector3(-0.337332, -0.0628616, -1.09045)
 attachments/6/point_index = 93
 attachments/6/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/6/offset = Vector3(-0.214286, 0.5, 0)
+attachments/6/offset = Vector3(-0.194486, -0.0626953, -1.08867)
 attachments/7/point_index = 92
 attachments/7/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/7/offset = Vector3(-0.0714286, 0.5, 0)
+attachments/7/offset = Vector3(-0.0516404, -0.0625289, -1.0869)
 
 [node name="CapeAttachementPoint" type="Node3D" parent="PlayerMesh"]
 transform = Transform3D(-0.999999, -0.00114578, 1.65545e-06, -0.00114578, 0.999995, -0.0030421, 1.83022e-06, -0.0030421, -0.999995, 0.000480882, 0.438022, -0.562805)
@@ -141,7 +142,7 @@ transform = Transform3D(-0.999999, -0.00114578, 1.65545e-06, -0.00114578, 0.9999
 [node name="Area3D" type="Area3D" parent="."]
 unique_name_in_owner = true
 collision_layer = 0
-collision_mask = 10
+collision_mask = 14
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
 shape = SubResource("CylinderShape3D_66fwo")
@@ -235,6 +236,7 @@ stretch_mode = 3
 [connection signal="health_change" from="." to="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer2/Label2" method="_on_character_body_3d_health_change"]
 [connection signal="mirror_shard_change" from="." to="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer/Label" method="_on_character_body_3d_mirror_shard_change"]
 [connection signal="body_entered" from="ParryBox" to="." method="_on_parry_box_body_entered"]
+[connection signal="body_exited" from="ParryBox" to="." method="_on_parry_box_body_exited"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="timeout" from="ParryWindowTimer" to="." method="_on_parry_window_timer_timeout"]
 [connection signal="timeout" from="ParryCdTimer" to="." method="_on_parry_cd_timer_timeout"]
