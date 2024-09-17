@@ -64,6 +64,6 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 0)
 layout_mode = 2
 size_flags_vertical = 1
-text = "Hello my name is barry allan no it is not garry"
+text = "Hello my name is barry allan no it is not garry and I am a cool guy so it is nice to meet you so it is good to be here you little nugget why are you like this"
 autowrap_mode = 3
 clip_text = true

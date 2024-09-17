@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="DialogueChain" load_steps=6 format=3 uid="uid://j5u00og01fvk"]
+
+[ext_resource type="Script" path="res://UI/Dialogue/dialogue_segment.gd" id="1_vrrcw"]
+[ext_resource type="Script" path="res://UI/Dialogue/dialogue_chain.gd" id="2_eoihe"]
+
+[sub_resource type="Resource" id="Resource_g8f85"]
+script = ExtResource("1_vrrcw")
+name = "Hello"
+speech = "See you now!!!!!!!"
+node_name = "DialogueTest"
+
+[sub_resource type="Resource" id="Resource_cbew5"]
+script = ExtResource("1_vrrcw")
+name = "Goodbye"
+speech = "See you later!!!!"
+node_name = "DialogueTest2"
+
+[sub_resource type="Resource" id="Resource_40vge"]
+script = ExtResource("1_vrrcw")
+name = "Cursed Larry"
+speech = "OH GOD THE SPINS I'M GOING TO HURL"
+node_name = "DialogueTest3"
+
+[resource]
+script = ExtResource("2_eoihe")
+chain = Array[ExtResource("1_vrrcw")]([SubResource("Resource_g8f85"), SubResource("Resource_cbew5"), SubResource("Resource_40vge")])
