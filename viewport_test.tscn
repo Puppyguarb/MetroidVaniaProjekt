@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://51l75i6014it"]
+
+[ext_resource type="PackedScene" uid="uid://dryv6xbgxn608" path="res://3DModels/monk-E-snake.fbx" id="1_iactt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6q2u2"]
+
+[sub_resource type="Sky" id="Sky_1p5qc"]
+sky_material = SubResource("ProceduralSkyMaterial_6q2u2")
+
+[sub_resource type="Environment" id="Environment_8kl0h"]
+background_mode = 2
+sky = SubResource("Sky_1p5qc")
+
+[sub_resource type="BoxMesh" id="BoxMesh_yeesf"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D2" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.16009)
+current = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8kl0h")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.999996, 0.00156886, -0.00225987, 0.00225267, 0.00457733, 0.999987, 0.00157918, -0.999988, 0.00457377, 0, 6.09085, 0)
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.672909, 0, -0.739725, -0.409626, 0.83268, -0.372627, 0.615954, 0.553755, 0.560318, 0.622116, 0, -0.549356)
+mesh = SubResource("BoxMesh_yeesf")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_left = 269.0
+offset_top = 487.0
+offset_right = 419.0
+offset_bottom = 637.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(150, 150)
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(0.995319, 0, -0.0966448, 0, 1, 0, 0.0966448, 0, 0.995319, 0, 0, 1.16009)
+
+[node name="monk-E-snake" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_iactt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.18435, -2.38419e-07, -2.89708)

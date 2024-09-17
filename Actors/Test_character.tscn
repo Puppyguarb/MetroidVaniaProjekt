@@ -1,12 +1,10 @@
-[gd_scene load_steps=21 format=3 uid="uid://xqgm4im8qfv1"]
+[gd_scene load_steps=18 format=3 uid="uid://xqgm4im8qfv1"]
 
 [ext_resource type="Script" path="res://character_body_3d.gd" id="1_j40xc"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="2_kj52q"]
 [ext_resource type="PackedScene" uid="uid://ycpmpctelptn" path="res://3DModels/CrappyShield.fbx" id="3_euiyl"]
 [ext_resource type="Material" uid="uid://cg81h1albtdku" path="res://Materials/Green.tres" id="3_yf06v"]
 [ext_resource type="Material" uid="uid://flq8j3d0aw7h" path="res://Materials/Red.tres" id="4_8y12a"]
-[ext_resource type="Script" path="res://Actors/label.gd" id="5_ybwnr"]
-[ext_resource type="Script" path="res://Actors/label_2.gd" id="7_fbshb"]
 [ext_resource type="Texture2D" uid="uid://d054pjvsssua1" path="res://how did you die to that.png" id="8_aagl6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_et0lu"]
@@ -39,22 +37,6 @@ subdivide_depth = 10
 [sub_resource type="BoxMesh" id="BoxMesh_k0rbm"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_w5j2j"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_te4ms"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0, 0, 0, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(1, 1, 1, 1)
-corner_radius_top_left = 124
-corner_radius_top_right = 124
-corner_radius_bottom_right = 124
-corner_radius_bottom_left = 124
 
 [node name="CharacterBody3D" type="CharacterBody3D"]
 script = ExtResource("1_j40xc")
@@ -186,46 +168,6 @@ one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 32
-theme_override_constants/margin_top = 32
-theme_override_constants/margin_right = 32
-theme_override_constants/margin_bottom = 32
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer"]
-layout_mode = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_te4ms")
-
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "Mirror Sharts: 1/1"
-script = ExtResource("5_ybwnr")
-
-[node name="PanelContainer2" type="PanelContainer" parent="CanvasLayer/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-theme_override_styles/panel = SubResource("StyleBoxFlat_te4ms")
-
-[node name="Label2" type="Label" parent="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer2"]
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "Hp: 2/2"
-script = ExtResource("7_fbshb")
-
 [node name="You Died" type="TextureRect" parent="CanvasLayer"]
 unique_name_in_owner = true
 visible = false
@@ -236,8 +178,6 @@ offset_bottom = 864.0
 texture = ExtResource("8_aagl6")
 stretch_mode = 3
 
-[connection signal="health_change" from="." to="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer2/Label2" method="_on_character_body_3d_health_change"]
-[connection signal="mirror_shard_change" from="." to="CanvasLayer/MarginContainer/VBoxContainer/PanelContainer/Label" method="_on_character_body_3d_mirror_shard_change"]
 [connection signal="body_entered" from="ParryBox" to="." method="_on_parry_box_body_entered"]
 [connection signal="body_exited" from="ParryBox" to="." method="_on_parry_box_body_exited"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

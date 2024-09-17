@@ -27,7 +27,9 @@ folder_colors={
 "res://Managers/": "yellow",
 "res://Materials/": "pink",
 "res://Scenes/": "green",
-"res://Terrain/": "blue"
+"res://Terrain/": "blue",
+"res://UI/": "pink",
+"res://UI/Dialogue/": "blue"
 }
 
 [input]

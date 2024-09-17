@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="DialogueSegment" load_steps=2 format=3 uid="uid://dor63ks1r1bsf"]
+
+[ext_resource type="Script" path="res://UI/Dialogue/dialogue_segment.gd" id="1_d1dqk"]
+
+[resource]
+script = ExtResource("1_d1dqk")
+name = "Text"
+speech = "Hello!"
+node_name = "DialogueTest"
