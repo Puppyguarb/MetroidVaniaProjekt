@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://8ofimlpj6xgb"]
+[gd_scene load_steps=22 format=3 uid="uid://8ofimlpj6xgb"]
 
 [ext_resource type="PackedScene" uid="uid://xqgm4im8qfv1" path="res://Actors/Test_character.tscn" id="1_xp2jq"]
 [ext_resource type="PackedScene" uid="uid://b6lxmc6t5c1i8" path="res://spittah.tscn" id="2_dm7y5"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" path="res://3DModels/monk_e_snake.gd" id="10_lruyu"]
 [ext_resource type="PackedScene" uid="uid://dianskwfe8iw3" path="res://3DModels/cursed_larry.fbx" id="11_rfcrp"]
 [ext_resource type="Script" path="res://3DModels/cursed_larry_test.gd" id="12_hr1wu"]
+[ext_resource type="PackedScene" uid="uid://ckcmuj7o76gym" path="res://Terrain/gate.tscn" id="13_yd2u7"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x7ln8"]
 
@@ -112,5 +113,8 @@ script = ExtResource("12_hr1wu")
 
 [node name="DialogueTest3" type="Marker3D" parent="cursed_larry"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.23315, 1.64515, 0)
+
+[node name="Gate" parent="." instance=ExtResource("13_yd2u7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.37234, -0.251554, -4.88974)
 
 [connection signal="body_entered" from="Node3D/Area3D" to="Node3D" method="_on_area_3d_body_entered"]
