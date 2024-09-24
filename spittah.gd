@@ -5,14 +5,14 @@ const BlUE_MAT = preload("res://Materials/Blue.tres")
 const RED_MAT = preload("res://Materials/Red.tres")
 const PURPLE_MAT = preload("res://Materials/Purple.tres")
 @onready var direction = %Direction
-@onready var dir = direction.global_position - global_position
 @export_range(1,3) var spit_tier : int : set = set_spit_tier
 
 func _on_timer_timeout() -> void: #this function spawns bullets
+	var dir = direction.global_position - global_position
 	var bullet = BULLET.instantiate()
 	bullet.origin = self
 	bullet.set_tier(spit_tier)
-	get_parent().add_child(bullet)
+	Singleton.player.get_parent().add_child(bullet)
 	bullet.global_position = self.global_position #lines 9 and 10 decide the direction and force of the bullet
 	bullet.apply_central_force(Vector3(dir*360))
 

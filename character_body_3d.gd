@@ -133,7 +133,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit/parry detectio
 		return
 	if dodging:
 		change_mirror_shard(1)
-	if not dodging and not is_parrying and invulnerable == 0:
+	if not dodging and invulnerable == 0:
 		take_damage(1)
 	await get_tree().create_timer(0.2).timeout
 	if not body:
