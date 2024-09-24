@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://ds5mt6xcbp82c"]
+
+[ext_resource type="Script" path="res://breakable_obstacle.gd" id="1_ls2sq"]
+[ext_resource type="PackedScene" uid="uid://ckcmuj7o76gym" path="res://Terrain/gate.tscn" id="2_6a5ok"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1oj0b"]
+size = Vector3(2, 2, 2)
+
+[node name="Breakable_obstacle" type="Node3D"]
+script = ExtResource("1_ls2sq")
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_1oj0b")
+
+[node name="Gate" parent="Area3D" instance=ExtResource("2_6a5ok")]

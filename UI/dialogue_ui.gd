@@ -14,12 +14,13 @@ var dialogue_index = 0
 func _ready():
 	visible = false
 	await get_tree().process_frame
-	start_new_dialogue(load("res://UI/Dialogue/TestDialogueChain.tres"))
+	#start_new_dialogue(load("res://UI/Dialogue/TestDialogueChain.tres"))
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("Interact"):
+		
 		if is_showing_characters():
 			current_shown_characters = -1
 			speech_label.visible_characters = -1
@@ -33,7 +34,7 @@ func _process(delta):
 
 
 func is_showing_characters():
-	return current_shown_characters < speech_label.text.length() or current_shown_characters == -1
+	return current_shown_characters < speech_label.text.length() and not current_shown_characters == -1
 
 func start_new_dialogue(dialogue_chain : DialogueChain):
 	current_dialogue = dialogue_chain.chain
