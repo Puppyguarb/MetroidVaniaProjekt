@@ -23,7 +23,7 @@ spit_tier = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 
 [node name="Rotation Timer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.75
 autostart = true
 
 [node name="Movement Timer" type="Timer" parent="."]

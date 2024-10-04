@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://8ofimlpj6xgb"]
+[gd_scene load_steps=25 format=3 uid="uid://8ofimlpj6xgb"]
 
 [ext_resource type="PackedScene" uid="uid://xqgm4im8qfv1" path="res://Actors/Test_character.tscn" id="1_xp2jq"]
 [ext_resource type="PackedScene" uid="uid://b6lxmc6t5c1i8" path="res://spittah.tscn" id="2_dm7y5"]
@@ -13,6 +13,8 @@
 [ext_resource type="PackedScene" uid="uid://dianskwfe8iw3" path="res://3DModels/cursed_larry.fbx" id="11_rfcrp"]
 [ext_resource type="Script" path="res://3DModels/cursed_larry_test.gd" id="12_hr1wu"]
 [ext_resource type="PackedScene" uid="uid://ckcmuj7o76gym" path="res://Terrain/gate.tscn" id="13_yd2u7"]
+[ext_resource type="PackedScene" uid="uid://dm6xd5n0qm6ai" path="res://checkpoint.tscn" id="14_nvwqc"]
+[ext_resource type="Material" uid="uid://60ympgwx2fo3" path="res://Materials/Rainbow.tres" id="15_h8itc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x7ln8"]
 
@@ -36,6 +38,9 @@ text = "Hello"
 
 [sub_resource type="TextMesh" id="TextMesh_dvufp"]
 text = "Goodbye"
+
+[sub_resource type="BoxMesh" id="BoxMesh_621xh"]
+material = ExtResource("15_h8itc")
 
 [node name="Node3D" type="Node3D"]
 
@@ -74,7 +79,7 @@ spit_tier = 3
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.125438, -6)
 
 [node name="Waltuh" parent="." instance=ExtResource("4_x70ej")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.79625, 0.522212, -2.2955)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05313, 0.297688, 4.09838)
 
 [node name="RigidBody3D" parent="." instance=ExtResource("5_b4ikc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.39186, -0.292377, 0.549472)
@@ -116,5 +121,17 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.2331
 
 [node name="Gate" parent="." instance=ExtResource("13_yd2u7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.37234, -0.251554, -4.88974)
+
+[node name="Checkpoint" parent="." instance=ExtResource("14_nvwqc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.04167, 0, -2.25794)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Checkpoint"]
+mesh = SubResource("BoxMesh_621xh")
+
+[node name="Checkpoint2" parent="." instance=ExtResource("14_nvwqc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.90995, 0.356276, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Checkpoint2"]
+mesh = SubResource("BoxMesh_621xh")
 
 [connection signal="body_entered" from="Node3D/Area3D" to="Node3D" method="_on_area_3d_body_entered"]

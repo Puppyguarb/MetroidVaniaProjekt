@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://xqgm4im8qfv1"]
+[gd_scene load_steps=19 format=3 uid="uid://xqgm4im8qfv1"]
 
 [ext_resource type="Script" path="res://character_body_3d.gd" id="1_j40xc"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="2_kj52q"]
 [ext_resource type="PackedScene" uid="uid://ycpmpctelptn" path="res://3DModels/CrappyShield.fbx" id="3_euiyl"]
 [ext_resource type="Material" uid="uid://cg81h1albtdku" path="res://Materials/Green.tres" id="3_yf06v"]
 [ext_resource type="Material" uid="uid://flq8j3d0aw7h" path="res://Materials/Red.tres" id="4_8y12a"]
+[ext_resource type="Script" path="res://Actors/checkpoint_manager.gd" id="7_5xppq"]
 [ext_resource type="Texture2D" uid="uid://d054pjvsssua1" path="res://how did you die to that.png" id="8_aagl6"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_et0lu"]
@@ -177,6 +178,9 @@ offset_right = 1536.0
 offset_bottom = 864.0
 texture = ExtResource("8_aagl6")
 stretch_mode = 3
+
+[node name="Checkpoint Manager" type="Node" parent="."]
+script = ExtResource("7_5xppq")
 
 [connection signal="body_entered" from="ParryBox" to="." method="_on_parry_box_body_entered"]
 [connection signal="body_exited" from="ParryBox" to="." method="_on_parry_box_body_exited"]

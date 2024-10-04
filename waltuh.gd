@@ -21,8 +21,7 @@ func wrap_angle(angle: float) -> float:
 
 func _on_movement_timer_timeout() -> void:
 	#var dir:Vector3 = origin.global_position-global_position
-	#dir=dir.normalized()
 	var dir = Vector2.from_angle(global_rotation.y)
 	dir=dir.normalized()
-	set_linear_velocity(Vector3(dir.x,0,dir.y)*1000)
-	print(linear_velocity)
+	set_linear_velocity(Vector3(dir.x,0,dir.y)*100)
+	#print(linear_velocity)

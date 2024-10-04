@@ -34,11 +34,13 @@ func deflect(away_dir):
 	set_collision_layer_value(2,true)
 
 func activate_tracking(): #this makes it green when parried
+	if origin == null:
+		return
 	is_tracking = true
 	mesh.material_override = GREEN_MAT
 
 func _physics_process(_delta:float) -> void: #this tracks the bullet back to its creator
-	if !is_tracking:
+	if !is_tracking or origin == null:
 		return
 	if is_perfect:
 		var dir:Vector3 = origin.global_position-global_position
