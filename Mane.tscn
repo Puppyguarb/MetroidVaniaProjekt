@@ -5,7 +5,7 @@
 [ext_resource type="Material" uid="uid://bcyw470ychbr6" path="res://Materials/Blue.tres" id="3_6gxs1"]
 [ext_resource type="PackedScene" uid="uid://c2ryv45tgr5u5" path="res://mirror_shard_collectible.tscn" id="3_8c47k"]
 [ext_resource type="Material" uid="uid://c1a6c4bk8tvx6" path="res://Materials/Purple.tres" id="4_3uray"]
-[ext_resource type="PackedScene" uid="uid://tleg8bhcnima" path="res://waltuh.tscn" id="4_x70ej"]
+[ext_resource type="PackedScene" uid="uid://dndv7txthxtfa" path="res://Actors/basic_enemy.tscn" id="4_x70ej"]
 [ext_resource type="PackedScene" uid="uid://cxka03nbevc3u" path="res://spittah_bullet.tscn" id="5_b4ikc"]
 [ext_resource type="PackedScene" uid="uid://cy61bit7sw74g" path="res://UI/game_hud.tscn" id="8_wjx33"]
 [ext_resource type="PackedScene" uid="uid://dryv6xbgxn608" path="res://3DModels/monk-E-snake.fbx" id="9_nsgqv"]
@@ -25,9 +25,10 @@ sky_material = SubResource("ProceduralSkyMaterial_x7ln8")
 background_mode = 2
 sky = SubResource("Sky_7qf2q")
 
-[sub_resource type="BoxMesh" id="BoxMesh_v6ecm"]
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_f0a8o"]
+size = Vector3(42.5259, 1, 51.8673)
+
+[sub_resource type="BoxMesh" id="BoxMesh_v6ecm"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_7sfnh"]
 height = 4.96019
@@ -44,7 +45,8 @@ material = ExtResource("15_h8itc")
 
 [node name="Node3D" type="Node3D"]
 
-[node name="CharacterBody3D" parent="." instance=ExtResource("1_xp2jq")]
+[node name="Player" parent="." instance=ExtResource("1_xp2jq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5529, 0, 3.8547)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_cab8o")
@@ -52,14 +54,16 @@ environment = SubResource("Environment_cab8o")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.999996, 0.00156886, -0.00225979, 0.00225267, 0.00457733, 0.999987, 0.00157918, -0.999989, 0.00457377, 0, 6.09085, 0)
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(42.5259, 0, 0, 0, 1, 0, 0, 0, 51.8673, 0, -1.6487, 0)
-mesh = SubResource("BoxMesh_v6ecm")
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6487, 0)
 
-[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("BoxShape3D_f0a8o")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(42.5259, 0, 0, 0, 1, 0, 0, 0, 51.8673, 0, 0, 0)
+mesh = SubResource("BoxMesh_v6ecm")
+skeleton = NodePath("../..")
 
 [node name="Spitter" parent="." instance=ExtResource("2_dm7y5")]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -0.641172, -0.44468, -6.32213)
@@ -70,6 +74,7 @@ spit_tier = 1
 transform = Transform3D(0.998289, -0.0584696, 2.55584e-09, 1.42329e-15, -4.37114e-08, -1, 0.0584696, 0.998289, -4.36366e-08, -3.10861, -0.204136, -5.94241)
 material_override = ExtResource("4_3uray")
 spit_tier = 2
+auto_fire = false
 
 [node name="Spitter3" parent="." instance=ExtResource("2_dm7y5")]
 transform = Transform3D(0.992117, 0.125317, -5.47772e-09, -2.10066e-15, -4.37114e-08, -1, -0.125317, 0.992117, -4.33668e-08, -7.00763, -0.497024, -4.30159)
@@ -77,9 +82,6 @@ spit_tier = 3
 
 [node name="Mirror Shard Collectible" parent="." instance=ExtResource("3_8c47k")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, -0.125438, -6)
-
-[node name="Waltuh" parent="." instance=ExtResource("4_x70ej")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.05313, 0.297688, 4.09838)
 
 [node name="RigidBody3D" parent="." instance=ExtResource("5_b4ikc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.39186, -0.292377, 0.549472)
@@ -133,5 +135,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.90995, 0.356276, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Checkpoint2"]
 mesh = SubResource("BoxMesh_621xh")
+
+[node name="CharacterBody3D2" parent="." instance=ExtResource("4_x70ej")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7012, -0.1487, 3.26179)
 
 [connection signal="body_entered" from="Node3D/Area3D" to="Node3D" method="_on_area_3d_body_entered"]

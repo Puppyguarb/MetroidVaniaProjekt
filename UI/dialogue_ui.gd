@@ -10,6 +10,8 @@ var current_shown_characters = 0.0
 var current_dialogue = []
 var dialogue_index = 0
 
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	visible = false

@@ -90,6 +90,8 @@ Interact={
 [layer_names]
 
 3d_physics/layer_2="Bullet"
+3d_physics/layer_4="Enemy"
+3d_physics/layer_16="Player"
 
 [rendering]
 

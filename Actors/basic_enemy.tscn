@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3 uid="uid://dndv7txthxtfa"]
+
+[ext_resource type="Material" uid="uid://flq8j3d0aw7h" path="res://Materials/Red.tres" id="2_iql3c"]
+[ext_resource type="Script" path="res://Actors/basic_enemy.gd" id="2_k7ota"]
+[ext_resource type="Material" uid="uid://c1a6c4bk8tvx6" path="res://Materials/Purple.tres" id="3_yegvw"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_5snjo"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_b7g67"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_n8nal"]
+
+[node name="CharacterBody3D" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+collision_layer = 8
+collision_mask = 32769
+script = ExtResource("2_k7ota")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_5snjo")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = ExtResource("2_iql3c")
+mesh = SubResource("CapsuleMesh_b7g67")
+
+[node name="DirectionIndicatorParent" type="Node3D" parent="."]
+
+[node name="DirectionIndicator" type="MeshInstance3D" parent="DirectionIndicatorParent"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -0.25, 0, 1, -1.09278e-08, 0, 0, 0.7)
+material_override = ExtResource("3_yegvw")
+mesh = SubResource("PrismMesh_n8nal")
+skeleton = NodePath("../..")

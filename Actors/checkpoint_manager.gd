@@ -16,6 +16,3 @@ func add_checkpoint(position):
 func get_last_checkpoint():
 	if checkpoints.size == 0:
 		return
-
-func spiderman_whyd_you_kill_that_guy():
-	pass

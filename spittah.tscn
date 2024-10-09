@@ -14,6 +14,7 @@ mesh = SubResource("PrismMesh_m4vh1")
 script = ExtResource("1_0v3w8")
 
 [node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
 wait_time = 2.0
 autostart = true
 

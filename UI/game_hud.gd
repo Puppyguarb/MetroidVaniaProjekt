@@ -5,6 +5,8 @@ extends CanvasLayer
 @onready 
 var health_label = %HealthLabel
 
+@onready var fps_counter = %FPSCounter
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Singleton.game_hud = self
@@ -22,4 +24,4 @@ func _on_health_change():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	fps_counter.set_text("FPS: %d" % [Engine.get_frames_per_second()])

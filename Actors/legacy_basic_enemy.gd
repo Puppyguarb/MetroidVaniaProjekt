@@ -23,5 +23,13 @@ func _on_movement_timer_timeout() -> void:
 	#var dir:Vector3 = origin.global_position-global_position
 	var dir = Vector2.from_angle(global_rotation.y)
 	dir=dir.normalized()
-	set_linear_velocity(Vector3(dir.x,0,dir.y)*100)
+	#apply_impulse(Vector3(dir.x,0,dir.y)*100)
+	#set_linear_velocity(Vector3(dir.x,0,dir.y)*100)
+	printerr("Dingerooni")
 	#print(linear_velocity)
+
+func _physics_process(delta):
+	var dir = Vector2.from_angle(global_rotation.y)
+	#apply_central_force(Vector3(dir.x,0,dir.y)*10*delta)
+	set_linear_velocity(Vector3(dir.x,0,dir.y)*1)
+	printerr(linear_velocity)

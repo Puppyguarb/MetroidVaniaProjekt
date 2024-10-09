@@ -51,10 +51,12 @@ func dodge():
 
 func invuln(time):
 	invulnerable = 1
-	set_collision_layer_value(1,false)
+	set_collision_layer_value(16,false)
+	set_collision_mask_value(4,false) # Enemy Collision
 	%Area3D.set_collision_mask_value(2,false)
 	await get_tree().create_timer(time).timeout
-	set_collision_layer_value(1,true)
+	set_collision_layer_value(16,true)
+	set_collision_mask_value(4,true) # Enemy Collision
 	%Area3D.set_collision_mask_value(2,true)
 	invulnerable = 0
 
