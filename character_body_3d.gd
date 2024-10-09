@@ -29,6 +29,10 @@ var is_perfect = false
 var invulnerable = 0
 var bullet_array = []
 
+
+var hsm : LimboHSM
+
+
 @onready var camera = %Camera3D
 
 var input_dir := Vector2.ZERO
@@ -130,7 +134,7 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 
 
-func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit/parry detection
+func _on_area_3d_body_entered(body: Node3D) -> void: #handles hit
 	if body is not Bullet:
 		return
 	if dodging:
@@ -242,3 +246,45 @@ func die():
 		await get_tree().create_timer(3).timeout
 		print("youre dead")
 		get_tree().change_scene_to_file(current_level)
+
+# --------------- State machine stuff
+func _init_state_machine():
+	hsm = LimboHSM.new()
+	add_child(hsm)
+	
+	## States and connected functions 
+	## .call_on_update is like physics_process but state independent (wont run when not in state)
+	## .call_on_enter is like _ready() for the state
+	var idle_state = LimboState.new().named("Idle").call_on_enter(_idle_ready).call_on_update(_idle_process)
+	var moving_state = LimboState.new().named("Move").call_on_enter(_move_ready).call_on_update(_move_process)
+	var dodging_state = LimboState.new().named("Dodge").call_on_enter(_dodge_ready).call_on_update(_dodge_process)
+	var parrying_state = LimboState.new().named("Parry").call_on_enter(_parry_ready).call_on_update(_parry_process)
+	
+	
+	hsm.add_transition(idle_state,moving_state, &"_ended")
+	hsm.initial_state = idle_state
+	hsm.initialize(self)
+	hsm.set_active(true)
+#idle
+func _idle_ready():
+	pass
+func _idle_process():
+	pass
+
+#move
+func _move_ready():
+	pass
+func _move_process():
+	pass
+
+#dodge
+func _dodge_ready():
+	pass
+func _dodge_process():
+	pass
+
+#parry
+func _parry_ready():
+	pass
+func _parry_process():
+	pass

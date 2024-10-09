@@ -1,0 +1,18 @@
+[gd_resource type="BlackboardPlan" format=3 uid="uid://dc6iugge8e80q"]
+
+[resource]
+var/EnemyType/name = &"EnemyType"
+var/EnemyType/type = 22
+var/EnemyType/value = NodePath("")
+var/EnemyType/hint = 0
+var/EnemyType/hint_string = ""
+var/HP/name = &"HP"
+var/HP/type = 3
+var/HP/value = 5.0
+var/HP/hint = 0
+var/HP/hint_string = ""
+var/AttackCooldown/name = &"AttackCooldown"
+var/AttackCooldown/type = 3
+var/AttackCooldown/value = 10.0
+var/AttackCooldown/hint = 0
+var/AttackCooldown/hint_string = ""

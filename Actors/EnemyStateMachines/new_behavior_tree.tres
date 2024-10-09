@@ -1,0 +1,48 @@
+[gd_resource type="BehaviorTree" load_steps=12 format=3 uid="uid://bw0aw6syxvuwn"]
+
+[ext_resource type="Script" path="res://ai/tasks/InRange.gd" id="1_20rks"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_pterp"]
+var/AttackCooldown/name = &"AttackCooldown"
+var/AttackCooldown/type = 3
+var/AttackCooldown/value = 0.0
+var/AttackCooldown/hint = 0
+var/AttackCooldown/hint_string = ""
+
+[sub_resource type="BTCondition" id="BTCondition_8ueim"]
+script = ExtResource("1_20rks")
+distance_min = 0.0
+distance_max = 30.0
+target_var = &"target"
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_1vt3p"]
+method = &"Attack"
+
+[sub_resource type="BTSequence" id="BTSequence_ll3bp"]
+children = [SubResource("BTCallMethod_1vt3p")]
+
+[sub_resource type="BTSequence" id="BTSequence_w4fmc"]
+custom_name = "Attack"
+children = [SubResource("BTCondition_8ueim"), SubResource("BTSequence_ll3bp")]
+
+[sub_resource type="BTCondition" id="BTCondition_62l5j"]
+script = ExtResource("1_20rks")
+distance_min = 20.0
+distance_max = 100.0
+target_var = &"target"
+
+[sub_resource type="BTSequence" id="BTSequence_52o3f"]
+
+[sub_resource type="BTSequence" id="BTSequence_igdm0"]
+custom_name = "Walk"
+children = [SubResource("BTCondition_62l5j"), SubResource("BTSequence_52o3f")]
+
+[sub_resource type="BTSequence" id="BTSequence_4jxvr"]
+custom_name = "Idle"
+
+[sub_resource type="BTSelector" id="BTSelector_igvrb"]
+children = [SubResource("BTSequence_w4fmc"), SubResource("BTSequence_igdm0"), SubResource("BTSequence_4jxvr")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_pterp")
+root_task = SubResource("BTSelector_igvrb")
