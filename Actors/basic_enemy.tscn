@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dndv7txthxtfa"]
+[gd_scene load_steps=8 format=3 uid="uid://dndv7txthxtfa"]
 
 [ext_resource type="Material" uid="uid://flq8j3d0aw7h" path="res://Materials/Red.tres" id="2_iql3c"]
 [ext_resource type="Script" path="res://Actors/basic_enemy.gd" id="2_k7ota"]
 [ext_resource type="Material" uid="uid://c1a6c4bk8tvx6" path="res://Materials/Purple.tres" id="3_yegvw"]
+[ext_resource type="PackedScene" uid="uid://b6lxmc6t5c1i8" path="res://spittah.tscn" id="4_60shk"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_5snjo"]
 
@@ -30,3 +31,8 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -0.25, 0, 1, -1.09278e-08, 0, 
 material_override = ExtResource("3_yegvw")
 mesh = SubResource("PrismMesh_n8nal")
 skeleton = NodePath("../..")
+
+[node name="Spitter" parent="." instance=ExtResource("4_60shk")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.202972, 0.384554)
+auto_fire = false

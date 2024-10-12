@@ -10,4 +10,4 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	#rotation.y += delta * SPIN_RATE
-	rotation.y += delta * SPIN_RATE*randf_range(0,2)
+	rotation.y += delta * SPIN_RATE#*randf_range(0,2)

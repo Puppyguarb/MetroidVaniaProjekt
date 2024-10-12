@@ -16,6 +16,8 @@ func set_auto_fire(value):
 
 func fire():
 	var dir = direction.global_position - global_position
+	dir = dir.normalized()
+	
 	var bullet = BULLET.instantiate()
 	bullet.origin = self
 	bullet.set_tier(spit_tier)

@@ -5,6 +5,9 @@ const SPEED = 5.0
 const BRAKE_ACCELERATION = 4.0
 const ACCELERATION = 2.5
 const SPIN_RATE = 2.0
+
+@onready var spitter = %Spitter
+
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -52,3 +55,6 @@ func move_toward_direction(delta):
 func brake():
 	velocity.x = move_toward(velocity.x, 0, BRAKE_ACCELERATION)
 	velocity.z = move_toward(velocity.z, 0, BRAKE_ACCELERATION)
+
+func fire():
+	spitter.fire()
