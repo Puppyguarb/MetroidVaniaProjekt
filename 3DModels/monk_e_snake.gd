@@ -7,8 +7,8 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	var dir = Singleton.player.global_position - global_position
+func _process(_delta):
+	var dir = VariableManager.player.global_position - global_position
 	global_rotation.y = atan2(dir.x,dir.z)
 
 
@@ -16,4 +16,4 @@ func _on_area_3d_body_entered(body):
 	if body is not Player:
 		return
 	
-	Singleton.player.take_damage(420)
+	VariableManager.player.take_damage(420)

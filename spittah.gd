@@ -21,7 +21,7 @@ func fire():
 	var bullet = BULLET.instantiate()
 	bullet.origin = self
 	bullet.set_tier(spit_tier)
-	Singleton.player.get_parent().add_child(bullet)
+	VariableManager.player.get_parent().add_child(bullet)
 	bullet.global_position = self.global_position 
 	bullet.apply_central_force(Vector3(dir*360))
 
@@ -35,7 +35,7 @@ func _on_area_3d_body_entered(body: Node3D) -> void: #this detects and deletes p
 		return
 	if body.is_tracking and not body.is_queued_for_deletion():
 		body.queue_free()
-	#Singleton.player.scale =Vector3(0.1,0.1,0.1)
+	#VariableManager.player.scale =Vector3(0.1,0.1,0.1)
 
 func set_spit_tier(new_tier):
 	if new_tier == spit_tier:

@@ -12,7 +12,7 @@ func _process(delta):
 		global_rotation.y = move_toward(current_angle, current_angle + angle_difference, spinamount * delta)
 
 func _on_rotation_timer_timeout() -> void:
-	intended_dir = Singleton.player.global_position - global_position
+	intended_dir = VariableManager.player.global_position - global_position
 	intended_angle = atan2(intended_dir.x, intended_dir.z)
 
 # Function to wrap angles between -π and π

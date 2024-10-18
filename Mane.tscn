@@ -1,6 +1,6 @@
-[gd_scene load_steps=25 format=3 uid="uid://8ofimlpj6xgb"]
+[gd_scene load_steps=29 format=3 uid="uid://8ofimlpj6xgb"]
 
-[ext_resource type="PackedScene" uid="uid://xqgm4im8qfv1" path="res://Actors/Test_character.tscn" id="1_xp2jq"]
+[ext_resource type="PackedScene" uid="uid://xqgm4im8qfv1" path="res://Actors/Player.tscn" id="1_xp2jq"]
 [ext_resource type="PackedScene" uid="uid://b6lxmc6t5c1i8" path="res://spittah.tscn" id="2_dm7y5"]
 [ext_resource type="Material" uid="uid://bcyw470ychbr6" path="res://Materials/Blue.tres" id="3_6gxs1"]
 [ext_resource type="PackedScene" uid="uid://c2ryv45tgr5u5" path="res://mirror_shard_collectible.tscn" id="3_8c47k"]
@@ -11,19 +11,21 @@
 [ext_resource type="PackedScene" uid="uid://dryv6xbgxn608" path="res://3DModels/monk-E-snake.fbx" id="9_nsgqv"]
 [ext_resource type="Script" path="res://3DModels/monk_e_snake.gd" id="10_lruyu"]
 [ext_resource type="PackedScene" uid="uid://dianskwfe8iw3" path="res://3DModels/cursed_larry.fbx" id="11_rfcrp"]
+[ext_resource type="PackedScene" uid="uid://bp7caex82pagd" path="res://Dialogue/dialogue_trigger.tscn" id="12_75hk6"]
 [ext_resource type="Script" path="res://3DModels/cursed_larry_test.gd" id="12_hr1wu"]
+[ext_resource type="Resource" uid="uid://j5u00og01fvk" path="res://UI/Dialogue/TestDialogueChain.tres" id="13_fse6s"]
 [ext_resource type="PackedScene" uid="uid://ckcmuj7o76gym" path="res://Terrain/gate.tscn" id="13_yd2u7"]
 [ext_resource type="PackedScene" uid="uid://dm6xd5n0qm6ai" path="res://checkpoint.tscn" id="14_nvwqc"]
 [ext_resource type="Material" uid="uid://60ympgwx2fo3" path="res://Materials/Rainbow.tres" id="15_h8itc"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_x7ln8"]
 
-[sub_resource type="Sky" id="Sky_7qf2q"]
+[sub_resource type="Sky" id="Sky_ev8bb"]
 sky_material = SubResource("ProceduralSkyMaterial_x7ln8")
 
 [sub_resource type="Environment" id="Environment_cab8o"]
 background_mode = 2
-sky = SubResource("Sky_7qf2q")
+sky = SubResource("Sky_ev8bb")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_f0a8o"]
 size = Vector3(42.5259, 1, 51.8673)
@@ -40,6 +42,12 @@ text = "Hello"
 [sub_resource type="TextMesh" id="TextMesh_dvufp"]
 text = "Goodbye"
 
+[sub_resource type="BoxMesh" id="BoxMesh_w1jxt"]
+size = Vector3(4, 4, 4)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_4tkb8"]
+size = Vector3(4, 4, 4)
+
 [sub_resource type="BoxMesh" id="BoxMesh_621xh"]
 material = ExtResource("15_h8itc")
 
@@ -52,7 +60,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.5529, 0, 3.8547)
 environment = SubResource("Environment_cab8o")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.999996, 0.00156886, -0.00225979, 0.00225267, 0.00457733, 0.999987, 0.00157918, -0.999989, 0.00457377, 0, 6.09085, 0)
+transform = Transform3D(0.126347, 0.969836, 0.208461, -0.462374, -0.128345, 0.877347, 0.877636, -0.207236, 0.432211, 0, 6.09085, 0)
+shadow_enabled = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.6487, 0)
@@ -96,6 +105,7 @@ script = ExtResource("10_lruyu")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.3419)
 
 [node name="Area3D" type="Area3D" parent="Node3D"]
+collision_mask = 32768
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/Area3D"]
 shape = SubResource("CylinderShape3D_7sfnh")
@@ -121,6 +131,15 @@ script = ExtResource("12_hr1wu")
 [node name="DialogueTest3" type="Marker3D" parent="cursed_larry"]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 1.23315, 1.64515, 0)
 
+[node name="Area3D" parent="cursed_larry" instance=ExtResource("12_75hk6")]
+dialogue_chain = ExtResource("13_fse6s")
+
+[node name="MeshInstance3D" parent="cursed_larry/Area3D" index="0"]
+mesh = SubResource("BoxMesh_w1jxt")
+
+[node name="CollisionShape3D" parent="cursed_larry/Area3D" index="1"]
+shape = SubResource("BoxShape3D_4tkb8")
+
 [node name="Gate" parent="." instance=ExtResource("13_yd2u7")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.37234, -0.251554, -4.88974)
 
@@ -140,3 +159,5 @@ mesh = SubResource("BoxMesh_621xh")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7012, -0.1487, 3.26179)
 
 [connection signal="body_entered" from="Node3D/Area3D" to="Node3D" method="_on_area_3d_body_entered"]
+
+[editable path="cursed_larry/Area3D"]

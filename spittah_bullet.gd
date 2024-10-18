@@ -21,7 +21,7 @@ func deflect(away_dir):
 	
 	set_collision_layer_value(2,false)
 	is_deflected = true
-	#var away_dir = global_position - Singleton.player.global_position
+	#var away_dir = global_position - VariableManager.player.global_position
 	# Add a random amount of deviation. To do this, we should convert the direction to an angle, and then back.
 	var additional_deviation = randi_range(-DEFLECT_DEVIATION,DEFLECT_DEVIATION)
 	var angle = atan2(away_dir.z,away_dir.x) + deg_to_rad(DEFLECT_MIN_DEVIATION*sign(additional_deviation)) + deg_to_rad(additional_deviation)

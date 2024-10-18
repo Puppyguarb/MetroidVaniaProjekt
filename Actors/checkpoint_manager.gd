@@ -3,7 +3,7 @@ class_name CheckPointManager
 var checkpoints = []
 
 func _ready() -> void:
-	Singleton.checkpoint_manager = self
+	VariableManager.checkpoint_manager = self
 	checkpoints.insert(0,Vector3(0,0,0))
 
 func add_checkpoint(position):

@@ -8,14 +8,6 @@ func _ready() -> void:
 	toggle(true)
 	await get_tree().create_timer(2).timeout
 	toggle(false)
- # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
 
 func toggle(value):
 	mesh.visible = value

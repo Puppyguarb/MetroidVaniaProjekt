@@ -31,10 +31,10 @@ func _physics_process(delta):
 
 func initialize_state_machine():
 	state_machine.state_machine_owner = self
-	state_machine.target = Singleton.player
+	state_machine.target = VariableManager.player
 
 func face_player(delta):
-	var dir = Singleton.player.global_position - global_position
+	var dir = VariableManager.player.global_position - global_position
 	var target_angle = atan2(dir.x, dir.z)
 	var current_angle = self.global_rotation.y
 	var raw_angle_diff = target_angle - current_angle
@@ -50,8 +50,8 @@ func wrap_angle(angle: float) -> float:
 	return fmod(angle + PI, 2 * PI) - PI
 
 # Needs to be in a physics loop!
-func move_toward_direction(delta):
-	var dir = Vector2.from_angle(global_rotation.y)#Singleton.player.global_position - global_position
+func move_toward_direction(_delta):
+	var dir = Vector2.from_angle(global_rotation.y)#VariableManager.player.global_position - global_position
 	dir = dir.normalized()
 	dir = Vector3(dir.y,0,dir.x)
 	velocity.x = move_toward(velocity.x,dir.x * SPEED,ACCELERATION)

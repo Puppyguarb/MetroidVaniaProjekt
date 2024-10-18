@@ -38,7 +38,7 @@ var hsm : LimboHSM
 var input_dir := Vector2.ZERO
 
 func _ready() -> void:
-	Singleton.player = self
+	VariableManager.player = self
 
 func dodge():
 	if dodge_cooldown > 0:

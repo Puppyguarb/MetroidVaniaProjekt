@@ -1,6 +1,6 @@
-[gd_scene load_steps=19 format=3 uid="uid://xqgm4im8qfv1"]
+[gd_scene load_steps=17 format=3 uid="uid://xqgm4im8qfv1"]
 
-[ext_resource type="Script" path="res://character_body_3d.gd" id="1_j40xc"]
+[ext_resource type="Script" path="res://Actors/Player.gd" id="1_j40xc"]
 [ext_resource type="Script" path="res://camera_3d.gd" id="2_kj52q"]
 [ext_resource type="PackedScene" uid="uid://ycpmpctelptn" path="res://3DModels/CrappyShield.fbx" id="3_euiyl"]
 [ext_resource type="Material" uid="uid://cg81h1albtdku" path="res://Materials/Green.tres" id="3_yf06v"]
@@ -16,20 +16,9 @@ size = Vector3(2.12842, 2.55768, 0.460358)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1is6h"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_l1k88"]
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_s2d5q"]
 
-[sub_resource type="PrismMesh" id="PrismMesh_b111u"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dcl3v"]
-cull_mode = 2
-vertex_color_use_as_albedo = true
-
-[sub_resource type="QuadMesh" id="QuadMesh_disvr"]
-lightmap_size_hint = Vector2i(7, 7)
-material = SubResource("StandardMaterial3D_dcl3v")
-add_uv2 = true
-subdivide_width = 6
-subdivide_depth = 10
+[sub_resource type="PrismMesh" id="PrismMesh_7f1x6"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_66fwo"]
 
@@ -87,46 +76,11 @@ script = ExtResource("2_kj52q")
 
 [node name="PlayerMesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0.000573387, 0.000327238, -0.00057289, 0.999999, -0.00152105, -0.000328107, 0.00152086, 0.999999, 0, 0, 0)
-mesh = SubResource("CapsuleMesh_l1k88")
+mesh = SubResource("CapsuleMesh_s2d5q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerMesh"]
-transform = Transform3D(0.25, 0, 0, 0, -1.09278e-08, 0.25, 0, -0.25, -1.09278e-08, 0, 0, -1.2106)
-mesh = SubResource("PrismMesh_b111u")
-
-[node name="SoftBody3D" type="SoftBody3D" parent="PlayerMesh"]
-transform = Transform3D(-0.999922, 0.0124263, 1.90346e-05, -1.89441e-05, 7.28155e-06, -1, -0.0124262, -0.999922, -7.04452e-06, -0.0254451, 0.378854, 1.02335)
-mesh = SubResource("QuadMesh_disvr")
-collision_layer = 0
-collision_mask = 7
-pinned_points = [88, 89, 90, 91, 95, 94, 93, 92]
-attachments/0/point_index = 88
-attachments/0/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/0/offset = Vector3(0.519743, -0.0618634, -1.0798)
-attachments/1/point_index = 89
-attachments/1/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/1/offset = Vector3(0.376897, -0.0620298, -1.08157)
-attachments/2/point_index = 90
-attachments/2/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/2/offset = Vector3(0.234052, -0.0621962, -1.08335)
-attachments/3/point_index = 91
-attachments/3/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/3/offset = Vector3(0.0912056, -0.0623625, -1.08512)
-attachments/4/point_index = 95
-attachments/4/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/4/offset = Vector3(-0.480178, -0.063028, -1.09222)
-attachments/5/point_index = 94
-attachments/5/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/5/offset = Vector3(-0.337332, -0.0628616, -1.09045)
-attachments/6/point_index = 93
-attachments/6/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/6/offset = Vector3(-0.194486, -0.0626953, -1.08867)
-attachments/7/point_index = 92
-attachments/7/spatial_attachment_path = NodePath("../CapeAttachementPoint")
-attachments/7/offset = Vector3(-0.0516404, -0.0625289, -1.0869)
-
-[node name="CapeAttachementPoint" type="Node3D" parent="PlayerMesh"]
-transform = Transform3D(-0.999999, -0.00114578, 1.65545e-06, -0.00114578, 0.999995, -0.0030421, 1.83022e-06, -0.0030421, -0.999995, 0.000480882, 0.438022, -0.562805)
+transform = Transform3D(-1, -8.74228e-08, 7.64274e-16, 0, -4.37114e-08, -0.2, 8.74228e-08, -1, 8.74228e-09, 0, 0.687, -0.523)
+mesh = SubResource("PrismMesh_7f1x6")
 
 [node name="Area3D" type="Area3D" parent="."]
 unique_name_in_owner = true
