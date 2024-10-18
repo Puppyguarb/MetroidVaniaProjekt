@@ -63,19 +63,20 @@ disabled = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_1is6h")
 
-[node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.623825, 0.781564, 0, -0.781564, 0.623825, 0, 5.85463, 4.04136)
-
-[node name="Camera3D" type="Camera3D" parent="Node3D"]
+[node name="Camera3D" type="Camera3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.986002, 0.166734, 0, -0.166734, 0.986002, 4.76837e-07, 0.811175, 3.11864)
+transform = Transform3D(0.887011, 0.387255, -0.251486, 0, 0.544639, 0.838671, 0.461749, -0.74391, 0.483101, -10, 35, 20)
 projection = 1
 fov = 70.0
-size = 8.47608
+size = 17.0
 script = ExtResource("2_kj52q")
+
+[node name="Node3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="PlayerMesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
+material_override = ExtResource("3_yf06v")
 mesh = SubResource("CapsuleMesh_s2d5q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PlayerMesh"]
