@@ -185,12 +185,18 @@ func change_parry_state(value):
 func _on_parry_cd_timer_timeout() -> void: #parry cooldown
 	$ParryCoolDown.visible = false
 
-func calculate_target_pos(pos_y): #idk i didnt write this
+func calculate_target_pos(pos_y):
 	var mouse_2d_pos = get_viewport().get_mouse_position()
-	var mouse_world_pos = camera.project_position(mouse_2d_pos,1) #project_ray_origin
-	var dir = (mouse_world_pos - camera.global_position).normalized()
-	var target_y = pos_y - camera.global_position.y
-	return camera.global_position+dir*(target_y/dir.y)
+	
+	# Get the ray origin and direction based on the mouse position
+	var ray_origin = camera.project_ray_origin(mouse_2d_pos)
+	var ray_dir = camera.project_ray_normal(mouse_2d_pos)
+
+	# Calculate the distance required to hit the target Y-plane
+	var dist_to_ground = (pos_y - ray_origin.y) / ray_dir.y
+
+	# Return the target position in world space
+	return ray_origin + ray_dir * dist_to_ground
 
 func increase_mirror_shard_max(increaseamount):
 	mirror_shards_max = mirror_shards_max + increaseamount

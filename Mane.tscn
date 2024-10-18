@@ -1,11 +1,10 @@
-[gd_scene load_steps=29 format=3 uid="uid://8ofimlpj6xgb"]
+[gd_scene load_steps=28 format=3 uid="uid://8ofimlpj6xgb"]
 
 [ext_resource type="PackedScene" uid="uid://xqgm4im8qfv1" path="res://Actors/Player.tscn" id="1_xp2jq"]
 [ext_resource type="PackedScene" uid="uid://b6lxmc6t5c1i8" path="res://spittah.tscn" id="2_dm7y5"]
 [ext_resource type="Material" uid="uid://bcyw470ychbr6" path="res://Materials/Blue.tres" id="3_6gxs1"]
 [ext_resource type="PackedScene" uid="uid://c2ryv45tgr5u5" path="res://mirror_shard_collectible.tscn" id="3_8c47k"]
 [ext_resource type="Material" uid="uid://c1a6c4bk8tvx6" path="res://Materials/Purple.tres" id="4_3uray"]
-[ext_resource type="PackedScene" uid="uid://dndv7txthxtfa" path="res://Actors/basic_enemy.tscn" id="4_x70ej"]
 [ext_resource type="PackedScene" uid="uid://cxka03nbevc3u" path="res://spittah_bullet.tscn" id="5_b4ikc"]
 [ext_resource type="PackedScene" uid="uid://cy61bit7sw74g" path="res://UI/game_hud.tscn" id="8_wjx33"]
 [ext_resource type="PackedScene" uid="uid://dryv6xbgxn608" path="res://3DModels/monk-E-snake.fbx" id="9_nsgqv"]
@@ -154,9 +153,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.90995, 0.356276, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Checkpoint2"]
 mesh = SubResource("BoxMesh_621xh")
-
-[node name="CharacterBody3D2" parent="." instance=ExtResource("4_x70ej")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7012, -0.1487, 3.26179)
 
 [connection signal="body_entered" from="Node3D/Area3D" to="Node3D" method="_on_area_3d_body_entered"]
 
