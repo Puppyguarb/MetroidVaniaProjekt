@@ -6,27 +6,32 @@ const BRAKE_ACCELERATION = 4.0
 const ACCELERATION = 2.5
 const SPIN_RATE = 2.0
 
+
 @onready var spitter = %Spitter
+@onready var state_machine = $BasicScrapper
+
+
+func _ready():
+	initialize_state_machine()
 
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
-		
-	
-	
-	
 	
 	# Safe to remove
 	face_player(delta)
 	
-	if Input.is_action_pressed("Interact"):
-		move_toward_direction(delta)
-	else:
-		brake()
-	
-	move_and_slide()
+	#if state_machine.current_state == state_machine.Walk:
+		#move_toward_direction(delta)
+	#else:
+		#brake()
+	#
+	#move_and_slide()
 
+func initialize_state_machine():
+	state_machine.state_machine_owner = self
+	state_machine.target = Singleton.player
 
 func face_player(delta):
 	var dir = Singleton.player.global_position - global_position

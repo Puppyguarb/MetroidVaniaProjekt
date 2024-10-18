@@ -1,47 +1,70 @@
-[gd_resource type="BehaviorTree" load_steps=12 format=3 uid="uid://bw0aw6syxvuwn"]
-
-[ext_resource type="Script" path="res://ai/tasks/InRange.gd" id="1_20rks"]
+[gd_resource type="BehaviorTree" load_steps=15 format=3 uid="uid://bw0aw6syxvuwn"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_pterp"]
-var/AttackCooldown/name = &"AttackCooldown"
-var/AttackCooldown/type = 3
-var/AttackCooldown/value = 0.0
-var/AttackCooldown/hint = 0
-var/AttackCooldown/hint_string = ""
+var/distance_from_target/name = &"distance_from_target"
+var/distance_from_target/type = 3
+var/distance_from_target/value = 0.0
+var/distance_from_target/hint = 0
+var/distance_from_target/hint_string = ""
+var/is_agro/name = &"is_agro"
+var/is_agro/type = 1
+var/is_agro/value = false
+var/is_agro/hint = 0
+var/is_agro/hint_string = ""
 
-[sub_resource type="BTCondition" id="BTCondition_8ueim"]
-script = ExtResource("1_20rks")
-distance_min = 0.0
-distance_max = 30.0
-target_var = &"target"
+[sub_resource type="BBVariant" id="BBVariant_5s1il"]
+type = 1
+saved_value = false
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_b1xox"]
+variable = &"is_agro"
+value = SubResource("BBVariant_5s1il")
+
+[sub_resource type="BTSequence" id="BTSequence_4jxvr"]
+custom_name = "Idle"
+children = [SubResource("BTCheckVar_b1xox")]
+
+[sub_resource type="BBVariant" id="BBVariant_crphf"]
+type = 3
+saved_value = 10.0
+resource_name = "10"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_pxt60"]
+variable = &"distance_from_target"
+check_type = 1
+value = SubResource("BBVariant_crphf")
+
+[sub_resource type="BBNode" id="BBNode_tag0o"]
+saved_value = NodePath(".")
+resource_name = "."
 
 [sub_resource type="BTCallMethod" id="BTCallMethod_1vt3p"]
-method = &"Attack"
+node = SubResource("BBNode_tag0o")
+method = &"attack"
 
-[sub_resource type="BTSequence" id="BTSequence_ll3bp"]
+[sub_resource type="BTCooldown" id="BTCooldown_t5yyt"]
+start_cooled = true
 children = [SubResource("BTCallMethod_1vt3p")]
 
 [sub_resource type="BTSequence" id="BTSequence_w4fmc"]
 custom_name = "Attack"
-children = [SubResource("BTCondition_8ueim"), SubResource("BTSequence_ll3bp")]
+children = [SubResource("BTCheckVar_pxt60"), SubResource("BTCooldown_t5yyt")]
 
-[sub_resource type="BTCondition" id="BTCondition_62l5j"]
-script = ExtResource("1_20rks")
-distance_min = 20.0
-distance_max = 100.0
-target_var = &"target"
+[sub_resource type="BBNode" id="BBNode_pk086"]
+saved_value = NodePath(".")
+resource_name = "."
 
-[sub_resource type="BTSequence" id="BTSequence_52o3f"]
+[sub_resource type="BTCallMethod" id="BTCallMethod_4id70"]
+node = SubResource("BBNode_pk086")
+method = &"move"
+custom_name = "move"
 
 [sub_resource type="BTSequence" id="BTSequence_igdm0"]
 custom_name = "Walk"
-children = [SubResource("BTCondition_62l5j"), SubResource("BTSequence_52o3f")]
-
-[sub_resource type="BTSequence" id="BTSequence_4jxvr"]
-custom_name = "Idle"
+children = [SubResource("BTCallMethod_4id70")]
 
 [sub_resource type="BTSelector" id="BTSelector_igvrb"]
-children = [SubResource("BTSequence_w4fmc"), SubResource("BTSequence_igdm0"), SubResource("BTSequence_4jxvr")]
+children = [SubResource("BTSequence_4jxvr"), SubResource("BTSequence_w4fmc"), SubResource("BTSequence_igdm0")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_pterp")

@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://dndv7txthxtfa"]
+[gd_scene load_steps=10 format=3 uid="uid://dndv7txthxtfa"]
 
+[ext_resource type="PackedScene" uid="uid://b8s4t23ejk00d" path="res://Actors/EnemyStateMachines/Basic_Scrapper.tscn" id="2_4e2ie"]
 [ext_resource type="Material" uid="uid://flq8j3d0aw7h" path="res://Materials/Red.tres" id="2_iql3c"]
 [ext_resource type="Script" path="res://Actors/basic_enemy.gd" id="2_k7ota"]
 [ext_resource type="Material" uid="uid://c1a6c4bk8tvx6" path="res://Materials/Purple.tres" id="3_yegvw"]
 [ext_resource type="PackedScene" uid="uid://b6lxmc6t5c1i8" path="res://spittah.tscn" id="4_60shk"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_syef8"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_5snjo"]
 
@@ -16,6 +19,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 collision_layer = 8
 collision_mask = 32769
 script = ExtResource("2_k7ota")
+
+[node name="BasicScrapper" parent="." instance=ExtResource("2_4e2ie")]
+
+[node name="BTPlayer" parent="BasicScrapper" index="0"]
+blackboard_plan = SubResource("BlackboardPlan_syef8")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_5snjo")
@@ -36,3 +44,5 @@ skeleton = NodePath("../..")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0.202972, 0.384554)
 auto_fire = false
+
+[editable path="BasicScrapper"]
