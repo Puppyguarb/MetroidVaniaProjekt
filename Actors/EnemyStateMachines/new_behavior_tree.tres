@@ -1,4 +1,4 @@
-[gd_resource type="BehaviorTree" load_steps=15 format=3 uid="uid://bw0aw6syxvuwn"]
+[gd_resource type="BehaviorTree" load_steps=20 format=3 uid="uid://bw0aw6syxvuwn"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_pterp"]
 var/distance_from_target/name = &"distance_from_target"
@@ -15,6 +15,7 @@ var/is_agro/hint_string = ""
 [sub_resource type="BBVariant" id="BBVariant_5s1il"]
 type = 1
 saved_value = false
+resource_name = "false"
 
 [sub_resource type="BTCheckVar" id="BTCheckVar_b1xox"]
 variable = &"is_agro"
@@ -26,8 +27,8 @@ children = [SubResource("BTCheckVar_b1xox")]
 
 [sub_resource type="BBVariant" id="BBVariant_crphf"]
 type = 3
-saved_value = 10.0
-resource_name = "10"
+saved_value = 6.0
+resource_name = "6"
 
 [sub_resource type="BTCheckVar" id="BTCheckVar_pxt60"]
 variable = &"distance_from_target"
@@ -43,6 +44,7 @@ node = SubResource("BBNode_tag0o")
 method = &"attack"
 
 [sub_resource type="BTCooldown" id="BTCooldown_t5yyt"]
+duration = 2.5
 start_cooled = true
 children = [SubResource("BTCallMethod_1vt3p")]
 
@@ -59,12 +61,34 @@ node = SubResource("BBNode_pk086")
 method = &"move"
 custom_name = "move"
 
+[sub_resource type="BBVariant" id="BBVariant_wgx2o"]
+type = 3
+saved_value = 5.0
+resource_name = "5"
+
+[sub_resource type="BTCheckVar" id="BTCheckVar_l5blj"]
+variable = &"distance_from_target"
+check_type = 3
+value = SubResource("BBVariant_wgx2o")
+
 [sub_resource type="BTSequence" id="BTSequence_igdm0"]
 custom_name = "Walk"
-children = [SubResource("BTCallMethod_4id70")]
+children = [SubResource("BTCallMethod_4id70"), SubResource("BTCheckVar_l5blj")]
+
+[sub_resource type="BBNode" id="BBNode_wul2j"]
+saved_value = NodePath(".")
+resource_name = "."
+
+[sub_resource type="BTCallMethod" id="BTCallMethod_2igve"]
+node = SubResource("BBNode_wul2j")
+method = &"idle"
+
+[sub_resource type="BTSequence" id="BTSequence_56lvj"]
+custom_name = "Cant_do_anything"
+children = [SubResource("BTCallMethod_2igve")]
 
 [sub_resource type="BTSelector" id="BTSelector_igvrb"]
-children = [SubResource("BTSequence_4jxvr"), SubResource("BTSequence_w4fmc"), SubResource("BTSequence_igdm0")]
+children = [SubResource("BTSequence_4jxvr"), SubResource("BTSequence_w4fmc"), SubResource("BTSequence_igdm0"), SubResource("BTSequence_56lvj")]
 
 [resource]
 blackboard_plan = SubResource("BlackboardPlan_pterp")

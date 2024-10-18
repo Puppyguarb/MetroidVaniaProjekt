@@ -2,8 +2,13 @@ extends Node
 
 
 var target:Player
-var current_state :LimboState
+var current_state 
 var state_machine_owner
+var states = [
+	"walk",
+	"attack",
+	"idle",
+	]
 
 @onready var behavior_tree :BTPlayer = $BTPlayer
 
@@ -20,15 +25,20 @@ func get_distance_from_target():
 	behavior_tree.blackboard.set_var("distance_from_target",distance)
 
 func move():
-	#updates the enemies move protocol to true
-	pass
+	set_state(1)
+
+func idle():
+	set_state(3)
 
 func attack():
-	#changes state to attacking state.
-	print("Attacking")
+	set_state(2)
+	state_machine_owner.fire()
 
 func _physics_process(delta):
 	get_distance_from_target()
+
+func set_state(state):
+	current_state = states[state-1]
 
 #func _init_state_machine() -> void:
 	#hsm.add_transition(idle_state, move_state, idle_state.EVENT_FINISHED)

@@ -79,7 +79,8 @@ transform = Transform3D(1, 0, 0, 0, 0.623825, 0.781564, 0, -0.781564, 0.623825, 
 
 [node name="Camera3D" type="Camera3D" parent="Node3D"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.986002, 0.166734, 0, -0.166734, 0.986002, 4.76837e-07, 0.811175, 3.11864)
+projection = 1
 fov = 70.0
 size = 8.47608
 script = ExtResource("2_kj52q")

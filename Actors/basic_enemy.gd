@@ -22,12 +22,12 @@ func _physics_process(delta):
 	# Safe to remove
 	face_player(delta)
 	
-	#if state_machine.current_state == state_machine.Walk:
-		#move_toward_direction(delta)
-	#else:
-		#brake()
-	#
-	#move_and_slide()
+	if not state_machine.current_state: return
+	if state_machine.current_state == "walk":
+		move_toward_direction(delta)
+	else:
+		brake()
+	move_and_slide()
 
 func initialize_state_machine():
 	state_machine.state_machine_owner = self
