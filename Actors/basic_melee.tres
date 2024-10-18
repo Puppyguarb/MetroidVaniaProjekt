@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="attack" load_steps=2 format=3 uid="uid://bk7gygmnw10o5"]
+
+[ext_resource type="Script" path="res://Actors/attack_resource.gd" id="1_ns3k7"]
+
+[resource]
+script = ExtResource("1_ns3k7")
+is_melee = false
+severity = 0
+speed = 1.0
+damage = 1
+size = 1.0

@@ -1,0 +1,15 @@
+[gd_scene load_steps=5 format=3 uid="uid://b8s4t23ejk00d"]
+
+[ext_resource type="BlackboardPlan" uid="uid://dc6iugge8e80q" path="res://Actors/EnemyStateMachines/BasicScrapperBlackboard.tres" id="1_xm6pw"]
+[ext_resource type="Script" path="res://Actors/EnemyStateMachines/Basic_Scrapper.gd" id="2_jj5wt"]
+[ext_resource type="BehaviorTree" uid="uid://bw0aw6syxvuwn" path="res://Actors/EnemyStateMachines/bt_basic_scrapper.tres" id="3_inron"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_b05e2"]
+
+[node name="state_machine" type="LimboHSM"]
+blackboard_plan = ExtResource("1_xm6pw")
+script = ExtResource("2_jj5wt")
+
+[node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("3_inron")
+blackboard_plan = SubResource("BlackboardPlan_b05e2")

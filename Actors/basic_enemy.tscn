@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dndv7txthxtfa"]
 
-[ext_resource type="PackedScene" uid="uid://b8s4t23ejk00d" path="res://Actors/EnemyStateMachines/Basic_Scrapper.tscn" id="2_4e2ie"]
+[ext_resource type="PackedScene" uid="uid://b8s4t23ejk00d" path="res://Actors/EnemyStateMachines/npc_state_machine.tscn" id="2_4e2ie"]
 [ext_resource type="Material" uid="uid://flq8j3d0aw7h" path="res://Materials/Red.tres" id="2_iql3c"]
 [ext_resource type="Script" path="res://Actors/basic_enemy.gd" id="2_k7ota"]
 [ext_resource type="Material" uid="uid://c1a6c4bk8tvx6" path="res://Materials/Purple.tres" id="3_yegvw"]

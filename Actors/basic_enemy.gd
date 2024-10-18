@@ -33,6 +33,8 @@ func initialize_state_machine():
 	state_machine.state_machine_owner = self
 	state_machine.target = VariableManager.player
 
+
+
 func face_player(delta):
 	var dir = VariableManager.player.global_position - global_position
 	var target_angle = atan2(dir.x, dir.z)
