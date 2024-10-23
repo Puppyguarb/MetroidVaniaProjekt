@@ -20,6 +20,9 @@ collision_layer = 8
 collision_mask = 32769
 script = ExtResource("2_k7ota")
 
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+debug_enabled = true
+
 [node name="BasicScrapper" parent="." instance=ExtResource("2_4e2ie")]
 
 [node name="BTPlayer" parent="BasicScrapper" index="0"]
